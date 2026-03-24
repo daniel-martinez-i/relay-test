@@ -245,15 +245,67 @@ window.closeModal = closeModal;
 
 /* ═══ DATA EXPANDER SYSTEM ═══ */
 function initDataExpanders() {
+  if (!document.body.classList.contains('version-1')) return;
   const wrappers = document.querySelectorAll('.data-expander-wrapper');
+
+  function positionExpander(wrapper) {
+    const btn = wrapper.querySelector('.data-expander-btn');
+    const content = wrapper.querySelector('.data-expander-content');
+    if (!btn || !content) return;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const viewportPadding = 12;
+    const gap = 12;
+
+    const buttonRect = btn.getBoundingClientRect();
+    const panelWidth = Math.min(520, viewportWidth - viewportPadding * 2);
+
+    content.style.width = `${panelWidth}px`;
+    content.style.bottom = 'auto';
+
+    const availableBelow = viewportHeight - buttonRect.bottom - viewportPadding - gap;
+    const availableAbove = buttonRect.top - viewportPadding - gap;
+
+    const minimumOpenHeight = 200;
+    const openDown = availableBelow >= minimumOpenHeight || availableBelow >= availableAbove;
+    const availableSpace = openDown ? availableBelow : availableAbove;
+    const panelHeight = Math.max(180, Math.min(availableSpace, Math.floor(viewportHeight * 0.78)));
+
+    content.style.maxHeight = `${panelHeight}px`;
+
+    let left = buttonRect.left + buttonRect.width / 2 - panelWidth / 2;
+    left = Math.max(viewportPadding, Math.min(left, viewportWidth - viewportPadding - panelWidth));
+
+    let top;
+    if (openDown) {
+      top = Math.min(viewportHeight - viewportPadding - panelHeight, buttonRect.bottom + gap);
+    } else {
+      top = Math.max(viewportPadding, buttonRect.top - gap - panelHeight);
+    }
+
+    const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+    const arrowLeft = Math.max(18, Math.min(panelWidth - 18, buttonCenterX - left));
+
+    content.style.left = `${left}px`;
+    content.style.top = `${top}px`;
+    content.style.setProperty('--expander-arrow-left', `${arrowLeft}px`);
+    content.classList.toggle('open-down', openDown);
+  }
   
   wrappers.forEach(wrapper => {
     const btn = wrapper.querySelector('.data-expander-btn');
     let isPinned = false;
 
+    const updatePosition = () => {
+      if (!wrapper.classList.contains('active')) return;
+      positionExpander(wrapper);
+    };
+
     // Hover logic
     wrapper.addEventListener('mouseenter', () => {
       wrapper.classList.add('active');
+      updatePosition();
     });
 
     wrapper.addEventListener('mouseleave', () => {
@@ -271,6 +323,7 @@ function initDataExpanders() {
       if (isPinned) {
         btn.classList.add('pinned');
         wrapper.classList.add('active');
+        updatePosition();
       } else {
         btn.classList.remove('pinned');
         // If unpinned while mouse is outside, close it. Otherwise leave it open from hover.
@@ -288,6 +341,9 @@ function initDataExpanders() {
         wrapper.classList.remove('active');
       }
     });
+
+    window.addEventListener('resize', updatePosition, { passive: true });
+    window.addEventListener('scroll', updatePosition, true);
   });
 }
 

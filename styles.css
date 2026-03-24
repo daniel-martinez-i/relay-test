@@ -463,27 +463,30 @@ section:nth-child(even) { background: var(--bg-section-alt); }
   text-align: left;
 }
 .data-expander-content {
-  position: absolute;
-  bottom: calc(100% + 20px);
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  width: min(500px, 90vw);
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateY(10px);
+  width: min(520px, calc(100vw - 24px));
   background: var(--bg-section-alt);
   border: 1px solid var(--border-accent);
   border-radius: var(--radius-card);
   padding: 28px;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s var(--ease);
   box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 40px var(--accent-glow);
   pointer-events: none;
-  z-index: 100;
+  z-index: 2100;
 }
 .data-expander-content::after {
   content: '';
   position: absolute;
   bottom: -7px;
-  left: 50%;
+  left: var(--expander-arrow-left, 50%);
   transform: translateX(-50%) rotate(45deg);
   width: 14px;
   height: 14px;
@@ -491,10 +494,15 @@ section:nth-child(even) { background: var(--bg-section-alt); }
   border-right: 1px solid var(--border-accent);
   border-bottom: 1px solid var(--border-accent);
 }
+.data-expander-content.open-down::after {
+  top: -7px;
+  bottom: auto;
+  transform: translateX(-50%) rotate(225deg);
+}
 .data-expander-wrapper.active .data-expander-content {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 .data-expander-btn.pinned {
@@ -517,6 +525,37 @@ section:nth-child(even) { background: var(--bg-section-alt); }
 }
 .expander-list strong {
   color: var(--text-primary); display: block; margin-bottom: 4px;
+}
+
+.version-1 .data-expander-wrapper {
+  margin-top: 28px;
+}
+
+.version-1 .btn.btn-ghost.data-expander-btn {
+  min-height: 48px;
+}
+
+.version-1 .btn.btn-ghost.btn-arrow {
+  padding: 13px 30px;
+  min-height: 48px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  border-color: var(--border-accent);
+  background: var(--accent-light);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.version-1 .btn.btn-ghost.btn-arrow:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.version-1 #market .btn.btn-ghost.btn-arrow {
+  margin-top: 30px;
 }
 
 /* ═══ RESPONSIVE ═══ */

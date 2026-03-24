@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="version-1">
   <div id="v1-progress-container" style="position: fixed; top: 0; left: 0; right: 0; z-index: 2000; height: 4px; background: rgba(255,255,255,0.1);">
     <div id="v1-progress-bar" style="height: 100%; width: 0%; background: #10B981; transition: width 0.1s, background 0.5s;"></div>
     <div id="v1-time-remaining" style="position: absolute; top: 8px; right: 24px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); background: var(--bg-glass); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); backdrop-filter: blur(4px);">
@@ -82,9 +82,7 @@
         It's <em class="narrative-em">removing the interruptions</em> around care.
       </h2>
       <p class="subheadline reveal reveal-delay-2" style="margin:32px auto 0;">
-        Every shift, caregivers lose hours to non-clinical logistics – fetching supplies,
-        transporting linens, chasing dropped items. These interruptions don't just waste time.
-        They erode capacity, morale, and margin.
+        Caregivers lose 3+ hours daily to non-clinical tasks—the margin killer no one's fixing.
       </p>
 
       <!-- Data Expander: Slide 1 -->
@@ -139,8 +137,7 @@
               class="headline-accent">structural</span>.
           </h2>
           <p class="subheadline reveal reveal-delay-2" style="margin-top:24px;">
-            Nursing homes sit at the intersection of aging demographics, chronic staffing gaps,
-            and tightening regulation. The pressure is not cyclical – it's permanent.
+            Structural labor crisis. Hiring won't solve this.
           </p>
           <button class="btn btn-ghost btn-arrow reveal reveal-delay-3" onclick="openModal('market-modal')">
             Deep Dive
@@ -178,8 +175,7 @@
         Caregivers lose clinical time to fragmented, <span class="headline-accent">non-clinical logistics</span>.
       </h2>
       <p class="subheadline reveal reveal-delay-2" style="margin-top:20px;">
-        Every interruption compounds. A single "quick trip" to the supply room takes 8–12 minutes
-        and breaks the caregiver's rhythm with residents who depend on consistent presence.
+        Every 8-min errand pulls staff from residents. It's a workflow failure.
       </p>
       <div class="pain-flow reveal reveal-delay-3">
         <div class="pain-card">
@@ -244,17 +240,17 @@
         <div class="glass-card">
           <div class="card-icon">📊</div>
           <h3>Predictable OpEx</h3>
-          <p>Replace variable, burnout-driven labor costs with flat robotic infrastructure that scales linearly.</p>
+          <p>Flat OpEx beats burnout-driven labor volatility.</p>
         </div>
         <div class="glass-card">
           <div class="card-icon">🔄</div>
           <h3>Interruption Absorption</h3>
-          <p>Autonomously handle the logistical tasks that fragment clinical shifts and erode caregiver capacity.</p>
+          <p>Robots handle logistics. Care teams stay in care.</p>
         </div>
         <div class="glass-card">
           <div class="card-icon">💪</div>
           <h3>Staff Empowerment</h3>
-          <p>Give caregivers their time back. When staff can stay with residents, retention rises and burnout falls.</p>
+          <p>3+ hours recovered daily. Better retention, lower burnout.</p>
         </div>
       </div>
     </div>
@@ -270,8 +266,7 @@
         Multi-robot handoff is what makes facility-wide automation <span class="headline-accent">scalable</span>.
       </h2>
       <p class="subheadline reveal reveal-delay-2" style="margin-top:20px;">
-        A single robot covers a hallway. Relay's orchestration layer coordinates fleets across
-        wings, floors, and shifts – turning isolated machines into an integrated logistics nervous system.
+        Fleet orchestration, not isolated robots.
       </p>
       <div class="tech-diagram reveal reveal-delay-3">
         <div class="tech-flow">
@@ -301,17 +296,15 @@
         <div class="tech-points">
           <div class="tech-point">
             <strong>Zone-Based Coverage</strong>
-            Each robot owns a zone. Relay's software handles transitions between zones – no single bot needs to traverse
-            the entire facility.
+            Zone ownership + smart handoffs = full-facility coverage.
           </div>
           <div class="tech-point">
             <strong>Orchestration Layer</strong>
-            Central task allocation, real-time re-routing, and priority queuing ensure optimal fleet utilization around
-            the clock.
+            Always-on routing keeps throughput high.
           </div>
           <div class="tech-point">
             <strong>Graceful Degradation</strong>
-            If one robot is offline, tasks redistribute automatically. The system adapts – it never stops.
+            If one bot drops, tasks reroute instantly.
           </div>
         </div>
       </div>
@@ -330,8 +323,7 @@
       <div class="econ-hero-stat reveal reveal-delay-2">
         <div class="stat-label">Estimated Annual Value Per Facility</div>
         <div class="big-number" style="color:var(--accent);margin:12px 0;" data-count="185000" data-prefix="$">$0</div>
-        <div style="color:var(--text-secondary);font-size:0.9rem;">at 10% logistical labor recovery across a 120-bed
-          facility</div>
+        <div style="color:var(--text-secondary);font-size:0.9rem;">10% recovery = $185K/year in a 120-bed facility</div>
       </div>
       <div class="econ-compare reveal reveal-delay-3">
         <div class="econ-col old">
@@ -339,8 +331,7 @@
             style="font-size:0.75rem;color:rgba(255,100,100,0.7);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:12px;">
             Today</div>
           <div style="font-size:1.4rem;font-weight:700;margin-bottom:8px;">Variable &amp; Volatile</div>
-          <p style="font-size:0.85rem;color:var(--text-secondary);">Overtime, agency staffing, turnover costs,
-            burnout-driven churn. Unpredictable and compounding.</p>
+          <p style="font-size:0.85rem;color:var(--text-secondary);">Overtime, agency, churn—costs spike fast.</p>
         </div>
         <div class="econ-vs">vs</div>
         <div class="econ-col new">
@@ -348,8 +339,7 @@
             style="font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:12px;">
             With Relay</div>
           <div style="font-size:1.4rem;font-weight:700;margin-bottom:8px;">Flat &amp; Predictable</div>
-          <p style="font-size:0.85rem;color:var(--text-secondary);">Fixed robotic infrastructure cost. No burnout, no
-            overtime, no agency premiums. Scales linearly.</p>
+          <p style="font-size:0.85rem;color:var(--text-secondary);">Predictable infrastructure spend. Less agency dependence.</p>
         </div>
       </div>
       <div style="text-align:center;margin-top:40px;" class="reveal reveal-delay-4">
@@ -373,16 +363,14 @@
           <div class="proof-number">600+</div>
           <div class="proof-text">
             <h3>Hospitals using delivery robots today</h3>
-            <p>From pharmacy transport to linen delivery, autonomous logistics is already deployed at scale in acute
-              care. Senior care is the next frontier.</p>
+            <p>600+ hospitals already run this. Senior care is next.</p>
           </div>
         </div>
         <div class="glass-card proof-card">
           <div class="proof-number">3.2x</div>
           <div class="proof-text">
             <h3>ROI within 18 months at early deployments</h3>
-            <p>Healthcare facilities that have adopted robotic logistics report measurable ROI through labor
-              reallocation and reduced overtime dependency.</p>
+            <p>3.2x ROI in early deployments.</p>
           </div>
         </div>
       </div>
@@ -402,8 +390,7 @@
         What works at one facility <span class="headline-accent">compounds</span> at the operator level.
       </h2>
       <p class="subheadline reveal reveal-delay-2" style="margin:24px auto 0;">
-        The top 10 senior care operators control thousands of facilities. Once Relay proves at a single site,
-        the deployment playbook replicates across portfolios with minimal customization.
+        Win one site. Replicate to 10, then 50.
       </p>
       <div class="scale-visual reveal reveal-delay-3">
         <div class="scale-step">
@@ -441,30 +428,26 @@
         <div class="glass-card thesis-card">
           <div class="number">01</div>
           <h3>Massive Constrained Market</h3>
-          <p>15,000 US nursing facilities, 1.3M residents, $180B+ in annual spend – with structural labor deficits that
-            cannot be hired away.</p>
+          <p>15K facilities. 1.3M residents. $180B+ spend. Staffing gap persists.</p>
         </div>
         <div class="glass-card thesis-card">
           <div class="number">02</div>
           <h3>Technical Moat</h3>
-          <p>Multi-robot orchestration and zone-based handoff create a systems-level barrier. This is not a hardware
-            play – it's an intelligence layer.</p>
+          <p>Orchestration moat: intelligence layer, not commodity hardware.</p>
         </div>
         <div class="glass-card thesis-card">
           <div class="number">03</div>
           <h3>Defensible Economics</h3>
-          <p>Predictable per-facility revenue, high switching costs once integrated into workflow, and unit economics
-            that improve with density.</p>
+          <p>Sticky revenue, high switching costs, stronger density economics.</p>
         </div>
         <div class="glass-card thesis-card">
           <div class="number">04</div>
           <h3>Empowers Staff, Doesn't Replace Care</h3>
-          <p>The narrative is powerful and true: Relay makes caregivers better at their jobs. Regulatory and public
-            sentiment align with this positioning.</p>
+          <p>Empowers staff, not replaces them.</p>
         </div>
       </div>
       <div class="thesis-cta reveal reveal-delay-3">
-        <p>Ready to discuss how Relay recovers margin and capacity across senior care?</p>
+        <p>Move before this category consolidates.</p>
         <a href="mailto:invest@carbonorigins.com" class="btn btn-primary btn-arrow">Let's Talk</a>
         <a href="mailto:invest@carbonorigins.com?subject=Request%2FDownload%20Data%20Room%20PDF" class="btn btn-ghost" style="margin-top:12px;">request/download data room pdf</a>
       </div>
