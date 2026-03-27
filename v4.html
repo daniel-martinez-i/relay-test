@@ -398,6 +398,208 @@
         min-height: 0;
       }
     }
+    /* Version 4 - Integrated strategic map */
+    #thesis.strategic-map {
+      background:
+        radial-gradient(circle at 14% 10%, rgba(239, 68, 68, 0.16), transparent 34%),
+        radial-gradient(circle at 82% 14%, rgba(59, 130, 246, 0.12), transparent 36%),
+        linear-gradient(180deg, #0d1018 0%, #0a0d14 58%, #090b12 100%);
+    }
+    #thesis.strategic-map .section-inner {
+      max-width: 1260px;
+    }
+    .strategic-map-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .sm-header {
+      text-align: center;
+    }
+    .sm-headline {
+      font-size: clamp(1.8rem, 3.1vw, 2.7rem);
+      max-width: 1000px;
+      margin: 0 auto;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+    .landscape-shell {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      padding: 18px 18px 56px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.99);
+      transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+    }
+    #thesis.strategic-map.is-active .landscape-shell {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    #landscape-canvas {
+      width: 100%;
+      height: 350px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 50% 45%, rgba(18, 24, 35, 0.84), rgba(8, 10, 16, 0.95));
+      display: block;
+    }
+    .axis-hints {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .axis-hint {
+      font-size: 0.67rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: rgba(6, 8, 12, 0.72);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .axis-hint.x { border-color: rgba(59, 130, 246, 0.35); }
+    .axis-hint.y { border-color: rgba(249, 115, 22, 0.35); }
+    .axis-hint.z { border-color: rgba(168, 85, 247, 0.35); }
+    .cluster-legend {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      pointer-events: none;
+    }
+    .legend-chip {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(8, 10, 15, 0.72);
+      padding: 4px 9px;
+      color: rgba(240, 240, 245, 0.9);
+    }
+    .legend-chip.carbon { border-color: rgba(239, 68, 68, 0.5); color: rgba(255, 224, 224, 0.95); }
+    .legend-chip.oem { border-color: rgba(251, 191, 36, 0.5); }
+    .legend-chip.incumbent { border-color: rgba(148, 163, 184, 0.5); }
+    .legend-chip.startup { border-color: rgba(129, 140, 248, 0.5); }
+    .landscape-tooltip {
+      position: absolute;
+      min-width: 220px;
+      max-width: 280px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(7, 9, 13, 0.94);
+      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.4);
+      color: var(--text-primary);
+      font-size: 0.77rem;
+      line-height: 1.35;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 5;
+    }
+    .landscape-tooltip.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .landscape-tooltip strong {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f8fafc;
+      margin-bottom: 2px;
+    }
+    .sm-advantage-strip {
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.16), rgba(32, 11, 11, 0.32));
+      padding: 14px 16px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.75s var(--ease), transform 0.85s var(--ease);
+      transition-delay: 0.16s;
+    }
+    #thesis.strategic-map.is-active .sm-advantage-strip {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .sm-advantage-strip h3 {
+      font-size: clamp(1rem, 1.7vw, 1.45rem);
+      text-align: center;
+      color: #ffd2d2;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .sm-advantage-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .sm-advantage-grid article {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(12, 14, 20, 0.64);
+      min-height: 92px;
+    }
+    .sm-advantage-grid h4 {
+      font-size: 0.85rem;
+      color: #fff2f2;
+      margin-bottom: 6px;
+    }
+    .sm-advantage-grid p {
+      font-size: 0.75rem;
+      line-height: 1.35;
+      color: rgba(240, 240, 245, 0.78);
+    }
+    @media (max-width: 1100px) {
+      #landscape-canvas {
+        height: 320px;
+      }
+      .axis-hints {
+        grid-template-columns: 1fr;
+      }
+      .sm-advantage-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 760px) {
+      .landscape-shell {
+        padding: 12px 12px 52px;
+      }
+      #landscape-canvas {
+        height: 280px;
+      }
+      .cluster-legend {
+        position: static;
+        margin-bottom: 10px;
+      }
+      .axis-hints {
+        left: 12px;
+        right: 12px;
+      }
+      .sm-advantage-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 
 <body>
@@ -793,103 +995,49 @@
   <!-- ══════════════════════════════════════════
      S10 – INVESTMENT THESIS / CLOSE
      ══════════════════════════════════════════ -->
-  <section id="thesis" class="strategic-positioning">
-    <div class="section-inner">
-      <div class="sp-title-wrap reveal">
+  <section id="thesis" class="strategic-map">
+    <div class="section-inner strategic-map-inner">
+      <div class="sm-header reveal">
         <div class="label" style="display:block;text-align:center;">Strategic Positioning</div>
-        <h2 class="headline sp-main-headline">The Market Sells Fragments. Carbon Is Building the Full Stack.</h2>
+        <h2 class="headline sm-headline">Carbon sits at the frontier corner while the market remains scattered across partial approaches.</h2>
       </div>
 
-      <div class="sp-stack-card reveal reveal-delay-1">
-        <h3>MSI = the full stack</h3>
-        <div class="sp-flow">
-          <div class="sp-flow-item">
-            <div class="sp-flow-icon">&#129302;</div>
-            <div class="sp-flow-text">learn</div>
-          </div>
-          <div class="sp-arrow">&#8594;</div>
-          <div class="sp-flow-item">
-            <div class="sp-flow-icon">&#129504;</div>
-            <div class="sp-flow-text">machine intelligence</div>
-          </div>
-          <div class="sp-arrow">&#8594;</div>
-          <div class="sp-flow-item">
-            <div class="sp-flow-icon">&#127760;</div>
-            <div class="sp-flow-text">agentic fleet coordination</div>
-          </div>
-          <div class="sp-arrow">&#8594;</div>
-          <div class="sp-flow-item">
-            <div class="sp-flow-icon">&#129302;</div>
-            <div class="sp-flow-text">deployment across form factors</div>
-          </div>
+      <div class="landscape-shell reveal reveal-delay-1" id="landscape-shell">
+        <canvas id="landscape-canvas" aria-label="3D competitor landscape map"></canvas>
+        <div id="landscape-tooltip" class="landscape-tooltip" role="tooltip" aria-hidden="true"></div>
+
+        <div class="axis-hints">
+          <div class="axis-hint x">X: Automation intelligence (classical to agentic)</div>
+          <div class="axis-hint y">Y: Solution scope (components to full stack)</div>
+          <div class="axis-hint z">Z: Cross-application scalability (narrow to transferable)</div>
+        </div>
+
+        <div class="cluster-legend">
+          <span class="legend-chip carbon">Carbon alone</span>
+          <span class="legend-chip oem">OEM-native</span>
+          <span class="legend-chip incumbent">Non-OEM incumbents</span>
+          <span class="legend-chip startup">Startups / narrow automation</span>
         </div>
       </div>
 
-      <div class="sp-bucket-row reveal reveal-delay-2">
-        <article class="sp-bucket bucket-1">
-          <div class="sp-bucket-tag">Bucket 1</div>
-          <div class="sp-bucket-head">Purpose-Built Robots</div>
-          <div class="sp-bucket-copy">Great hardware,<br>narrow embodiment</div>
-          <div class="sp-badge-row">
-            <span class="sp-badge">ROBOFORGE</span>
-            <span class="sp-badge">STEELWORKS</span>
-            <span class="sp-badge">KINETIC</span>
-          </div>
-        </article>
-
-        <article class="sp-bucket bucket-2">
-          <div class="sp-bucket-tag">Bucket 2</div>
-          <div class="sp-bucket-head">OEM-Native Systems</div>
-          <div class="sp-bucket-copy">Strong inside one<br>OEM, locked stack</div>
-          <div class="sp-badge-row">
-            <span class="sp-badge">TERRA-BOTS</span>
-            <span class="sp-badge">NETWOOFB</span>
-          </div>
-        </article>
-
-        <article class="sp-bucket bucket-3">
-          <div class="sp-bucket-tag">Bucket 3</div>
-          <div class="sp-bucket-head">Point-Solution Retrofit</div>
-          <div class="sp-bucket-copy">Useful wedge,<br>not a platform</div>
-          <div class="sp-badge-row">
-            <span class="sp-badge">MODU TECH</span>
-            <span class="sp-badge">RETRO-TASK</span>
-          </div>
-        </article>
-      </div>
-
-      <p class="sp-category-statement reveal reveal-delay-3">The market sells partial answers. MSI is the ficategory that unifies unifies the full machine-labor stack.</p>
-
-      <div class="sp-red-panel reveal reveal-delay-4">
-        <div class="sp-red-title">Why Carbon Wins MSI</div>
-        <div class="sp-red-grid">
-          <article class="sp-red-card">
-            <div class="sp-red-card-head">De-risked deployment model</div>
-            <div class="sp-red-card-body">
-              <p>lower customer risk</p>
-              <p>minimal custom engineering</p>
-            </div>
+      <div class="sm-advantage-strip reveal reveal-delay-2">
+        <h3>Why Carbon Origins Holds the Competitive Advantage</h3>
+        <div class="sm-advantage-grid">
+          <article>
+            <h4>Agentic Control Layer</h4>
+            <p>Purpose-built for agentic automation instead of classical scripted workflows.</p>
           </article>
-          <article class="sp-red-card">
-            <div class="sp-red-card-head">Expert operator data engine</div>
-            <div class="sp-red-card-body">
-              <p>direct XR training data loop</p>
-              <p>higher-fidelity operator intent data</p>
-            </div>
+          <article>
+            <h4>Full-Stack Ownership</h4>
+            <p>Not a point tool. Carbon combines orchestration, intelligence, and deployment in one system.</p>
           </article>
-          <article class="sp-red-card">
-            <div class="sp-red-card-head">Machine controls moat</div>
-            <div class="sp-red-card-body">
-              <p>multi-OEM control library</p>
-              <p>each cracked machine family compounds deployment speed and cost advantage</p>
-            </div>
+          <article>
+            <h4>Cross-Application Transferability</h4>
+            <p>Hardware-agnostic and form-factor-agnostic deployment across application families.</p>
           </article>
-          <article class="sp-red-card">
-            <div class="sp-red-card-head">Attachment partner flywheel</div>
-            <div class="sp-red-card-body">
-              <p>workflow-specific data + GTM leverage</p>
-              <p>partners help train and distribute</p>
-            </div>
+          <article>
+            <h4>Compounding Data Advantage</h4>
+            <p>Each deployment improves control, speed, and rollout economics across the entire platform.</p>
           </article>
         </div>
       </div>
@@ -1292,8 +1440,382 @@
   <script>
     const wrapper = document.getElementById('horizontal-wrapper');
     const sections = Array.from(wrapper.querySelectorAll('section'));
+    const thesisSection = document.getElementById('thesis');
     let currentIndex = 0;
     let wheelLocked = false;
+
+    const mapCanvas = document.getElementById('landscape-canvas');
+    const mapTooltip = document.getElementById('landscape-tooltip');
+    const mapState = {
+      ready: false,
+      active: false,
+      angle: 0,
+      pulse: 0,
+      hoveredId: null,
+      dpr: 1,
+      width: 0,
+      height: 0,
+      cx: 0,
+      cy: 0,
+      perspective: 460,
+      nodes: [],
+      nodePositions: []
+    };
+
+    function initStrategicMap() {
+      if (!mapCanvas || !mapTooltip) return;
+
+      mapState.nodes = [
+        {
+          id: 'carbon',
+          label: 'Carbon Origins',
+          cluster: 'carbon',
+          color: '#ff5a5a',
+          point: { x: 0.92, y: 0.94, z: 0.93 },
+          radius: 8.5,
+          detail: 'Only agentic, full-stack, cross-application platform'
+        },
+        {
+          id: 'bluelight',
+          label: 'BlueLight',
+          cluster: 'startup',
+          color: '#60a5fa',
+          point: { x: -0.62, y: 0.34, z: -0.58 },
+          radius: 5.2,
+          detail: 'Narrow automation wedge; limited cross-application scalability'
+        },
+        {
+          id: 'pronto',
+          label: 'Pronto',
+          cluster: 'startup',
+          color: '#818cf8',
+          point: { x: -0.18, y: 0.78, z: -0.42 },
+          radius: 5.4,
+          detail: 'Full solution, but narrow transferability'
+        },
+        {
+          id: 'cat-komatsu',
+          label: 'Cat / Komatsu',
+          cluster: 'oem',
+          color: '#f59e0b',
+          point: { x: -0.72, y: 0.83, z: -0.66 },
+          radius: 5.8,
+          detail: 'Strong OEM-native systems, but closed and non-agentic'
+        },
+        {
+          id: 'hexagon',
+          label: 'Hexagon-type',
+          cluster: 'incumbent',
+          color: '#94a3b8',
+          point: { x: -0.28, y: 0.56, z: -0.12 },
+          radius: 5.6,
+          detail: 'Broad retrofit capability, but limited agentic intelligence'
+        },
+        {
+          id: 'bedrock',
+          label: 'Bedrock',
+          cluster: 'startup',
+          color: '#a78bfa',
+          point: { x: 0.26, y: 0.52, z: 0.14 },
+          radius: 5.4,
+          detail: 'Promising startup stack, but below Carbon on transferability'
+        },
+        {
+          id: 'other-startups',
+          label: 'Other Startups',
+          cluster: 'startup',
+          color: '#6366f1',
+          point: { x: 0.08, y: 0.44, z: -0.04 },
+          radius: 4.9,
+          detail: 'Strong in selected dimensions, but partial versus Carbon frontier'
+        }
+      ];
+
+      resizeStrategicMap();
+      bindStrategicMapHover();
+      mapState.ready = true;
+      requestAnimationFrame(renderStrategicMap);
+    }
+
+    function resizeStrategicMap() {
+      if (!mapCanvas) return;
+
+      const rect = mapCanvas.getBoundingClientRect();
+      mapState.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      mapState.width = Math.max(320, Math.floor(rect.width));
+      mapState.height = Math.max(220, Math.floor(rect.height));
+      mapState.cx = mapState.width / 2;
+      mapState.cy = mapState.height / 2;
+
+      mapCanvas.width = Math.floor(mapState.width * mapState.dpr);
+      mapCanvas.height = Math.floor(mapState.height * mapState.dpr);
+
+      const ctx = mapCanvas.getContext('2d');
+      if (ctx) {
+        ctx.setTransform(mapState.dpr, 0, 0, mapState.dpr, 0, 0);
+      }
+    }
+
+    function bindStrategicMapHover() {
+      mapCanvas.addEventListener('mouseleave', () => {
+        mapState.hoveredId = null;
+        hideMapTooltip();
+      });
+
+      mapCanvas.addEventListener('mousemove', (event) => {
+        if (!mapState.active) {
+          mapState.hoveredId = null;
+          hideMapTooltip();
+          return;
+        }
+
+        const rect = mapCanvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const hovered = pickNodeAtPoint(x, y);
+
+        if (!hovered) {
+          mapState.hoveredId = null;
+          hideMapTooltip();
+          return;
+        }
+
+        mapState.hoveredId = hovered.id;
+        showMapTooltip(hovered.node, hovered.x, hovered.y);
+      });
+    }
+
+    function rotatePoint(point, yaw, pitch) {
+      const cosY = Math.cos(yaw);
+      const sinY = Math.sin(yaw);
+      const cosP = Math.cos(pitch);
+      const sinP = Math.sin(pitch);
+
+      const x1 = point.x * cosY - point.z * sinY;
+      const z1 = point.x * sinY + point.z * cosY;
+      const y1 = point.y;
+
+      const y2 = y1 * cosP - z1 * sinP;
+      const z2 = y1 * sinP + z1 * cosP;
+
+      return { x: x1, y: y2, z: z2 };
+    }
+
+    function projectPoint(rotated) {
+      const depth = rotated.z + 2.35;
+      const scale = mapState.perspective / (depth * mapState.perspective);
+      return {
+        x: mapState.cx + rotated.x * 260 * scale,
+        y: mapState.cy - rotated.y * 210 * scale,
+        z: rotated.z,
+        scale,
+        depth
+      };
+    }
+
+    function drawAxis(ctx, yaw, pitch) {
+      const origin = projectPoint(rotatePoint({ x: -0.02, y: -0.02, z: -0.02 }, yaw, pitch));
+      const xEnd = projectPoint(rotatePoint({ x: 1.08, y: 0, z: 0 }, yaw, pitch));
+      const yEnd = projectPoint(rotatePoint({ x: 0, y: 1.08, z: 0 }, yaw, pitch));
+      const zEnd = projectPoint(rotatePoint({ x: 0, y: 0, z: 1.08 }, yaw, pitch));
+
+      ctx.lineWidth = 1.6;
+
+      ctx.strokeStyle = 'rgba(96, 165, 250, 0.9)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(xEnd.x, xEnd.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(249, 115, 22, 0.9)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(yEnd.x, yEnd.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.9)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(zEnd.x, zEnd.y);
+      ctx.stroke();
+    }
+
+    function drawSoftZones(ctx, yaw, pitch) {
+      const zones = [
+        { center: { x: -0.62, y: 0.74, z: -0.6 }, color: 'rgba(251, 191, 36, 0.16)' },
+        { center: { x: -0.24, y: 0.54, z: -0.12 }, color: 'rgba(148, 163, 184, 0.16)' },
+        { center: { x: -0.02, y: 0.45, z: -0.1 }, color: 'rgba(99, 102, 241, 0.16)' },
+        { center: { x: 0.92, y: 0.94, z: 0.93 }, color: 'rgba(239, 68, 68, 0.2)' }
+      ];
+
+      zones.forEach((zone) => {
+        const projected = projectPoint(rotatePoint(zone.center, yaw, pitch));
+        const radius = Math.max(26, 44 * projected.scale * 4.8);
+        const gradient = ctx.createRadialGradient(
+          projected.x,
+          projected.y,
+          radius * 0.2,
+          projected.x,
+          projected.y,
+          radius
+        );
+        gradient.addColorStop(0, zone.color);
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawNodes(ctx, yaw, pitch) {
+      const projectedNodes = mapState.nodes.map((node) => {
+        const rotated = rotatePoint(node.point, yaw, pitch);
+        const projected = projectPoint(rotated);
+        return { node, rotated, projected };
+      });
+
+      projectedNodes.sort((a, b) => a.projected.depth - b.projected.depth);
+      mapState.nodePositions = projectedNodes;
+
+      projectedNodes.forEach((entry) => {
+        const { node, projected } = entry;
+        const hovered = mapState.hoveredId === node.id;
+        const isCarbon = node.cluster === 'carbon';
+        const radiusBoost = hovered ? 1.22 : 1;
+        const pulse = isCarbon ? (1 + Math.sin(mapState.pulse) * 0.07) : 1;
+        const baseRadius = node.radius * projected.scale * 3.25;
+        const radius = Math.max(3.8, baseRadius * radiusBoost * pulse);
+
+        const glow = ctx.createRadialGradient(
+          projected.x,
+          projected.y,
+          radius * 0.2,
+          projected.x,
+          projected.y,
+          radius * (isCarbon ? 3.6 : 2.4)
+        );
+        glow.addColorStop(0, isCarbon ? 'rgba(255, 110, 110, 0.7)' : `${node.color}88`);
+        glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.3 : 1.75), 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = node.color;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = hovered ? 1.8 : 1;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const showLabel = isCarbon || hovered || projected.scale > 0.47;
+        if (showLabel) {
+          ctx.fillStyle = isCarbon ? '#ffecec' : 'rgba(230, 235, 243, 0.92)';
+          ctx.font = `600 ${isCarbon ? 12 : 10}px Inter, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(node.label, projected.x, projected.y - (radius + 7));
+        }
+      });
+    }
+
+    function pickNodeAtPoint(x, y) {
+      let candidate = null;
+
+      mapState.nodePositions.forEach((entry) => {
+        const radius = Math.max(8, entry.node.radius * entry.projected.scale * 4.1);
+        const dx = x - entry.projected.x;
+        const dy = y - entry.projected.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance <= radius) {
+          if (!candidate || entry.projected.depth < candidate.depth) {
+            candidate = {
+              id: entry.node.id,
+              depth: entry.projected.depth,
+              x: entry.projected.x,
+              y: entry.projected.y,
+              node: entry.node
+            };
+          }
+        }
+      });
+
+      return candidate;
+    }
+
+    function showMapTooltip(node, x, y) {
+      const shellRect = mapCanvas.parentElement.getBoundingClientRect();
+      const canvasRect = mapCanvas.getBoundingClientRect();
+
+      mapTooltip.innerHTML = `<strong>${node.label}</strong>${node.detail}`;
+      mapTooltip.classList.add('show');
+      mapTooltip.setAttribute('aria-hidden', 'false');
+
+      const tooltipWidth = Math.min(280, shellRect.width - 20);
+      mapTooltip.style.maxWidth = `${tooltipWidth}px`;
+
+      const left = Math.min(shellRect.width - tooltipWidth - 8, Math.max(8, (canvasRect.left - shellRect.left) + x + 12));
+      const top = Math.max(12, (canvasRect.top - shellRect.top) + y - 8);
+
+      mapTooltip.style.left = `${left}px`;
+      mapTooltip.style.top = `${top}px`;
+    }
+
+    function hideMapTooltip() {
+      mapTooltip.classList.remove('show');
+      mapTooltip.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderStrategicMap() {
+      if (!mapState.ready || !mapCanvas) {
+        requestAnimationFrame(renderStrategicMap);
+        return;
+      }
+
+      const ctx = mapCanvas.getContext('2d');
+      if (!ctx) {
+        requestAnimationFrame(renderStrategicMap);
+        return;
+      }
+
+      if (mapState.active) {
+        mapState.angle += 0.0022;
+        mapState.pulse += 0.045;
+      } else {
+        mapState.angle += 0.0006;
+        mapState.pulse += 0.018;
+      }
+
+      const yaw = mapState.angle;
+      const pitch = -0.34 + Math.sin(mapState.angle * 0.55) * 0.035;
+
+      ctx.clearRect(0, 0, mapState.width, mapState.height);
+      drawSoftZones(ctx, yaw, pitch);
+      drawAxis(ctx, yaw, pitch);
+      drawNodes(ctx, yaw, pitch);
+
+      requestAnimationFrame(renderStrategicMap);
+    }
+
+    function setStrategicMapActiveState() {
+      const thesisIndex = sections.findIndex((section) => section.id === 'thesis');
+      const active = currentIndex === thesisIndex;
+
+      if (thesisSection) {
+        thesisSection.classList.toggle('is-active', active);
+      }
+      mapState.active = active;
+      if (!active) {
+        mapState.hoveredId = null;
+        hideMapTooltip();
+      }
+    }
 
     function goToIndex(index) {
       const clampedIndex = Math.max(0, Math.min(index, sections.length - 1));
@@ -1304,6 +1826,7 @@
         left: currentIndex * window.innerWidth,
         behavior: 'smooth'
       });
+      setStrategicMapActiveState();
     }
 
     function fitSlideContent() {
@@ -1371,15 +1894,19 @@
       const index = Math.round(wrapper.scrollLeft / window.innerWidth);
       if (index !== currentIndex) {
         currentIndex = index;
+        setStrategicMapActiveState();
       }
     });
 
     window.addEventListener('resize', () => {
       fitSlideContent();
+      resizeStrategicMap();
       wrapper.scrollTo({ left: currentIndex * window.innerWidth });
     });
 
+    initStrategicMap();
     fitSlideContent();
+    setStrategicMapActiveState();
 
     // Fix modal body scrolling
     const originalOpenModal = window.openModal;
