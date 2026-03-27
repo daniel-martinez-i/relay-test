@@ -70,6 +70,334 @@
     .dot-nav { display: none !important; }
     /* Hide the downward scroll indicator on cover */
     .scroll-indicator { display: none !important; }
+
+    /* Version 4 - Strategic Positioning slide */
+    #thesis.strategic-positioning {
+      background:
+        radial-gradient(circle at 16% 10%, rgba(251, 191, 36, 0.1), transparent 38%),
+        radial-gradient(circle at 80% 14%, rgba(168, 85, 247, 0.12), transparent 34%),
+        linear-gradient(180deg, #0f1118 0%, #090b12 100%);
+    }
+    #thesis.strategic-positioning .section-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+    .sp-title-wrap {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .sp-title-wrap .label {
+      margin-bottom: 10px;
+    }
+    .sp-main-headline {
+      font-size: clamp(2rem, 3.8vw, 3.1rem);
+      line-height: 1.08;
+      margin: 0 auto;
+      max-width: 1080px;
+      letter-spacing: -0.02em;
+    }
+    .sp-stack-card {
+      width: min(100%, 980px);
+      margin: 20px auto 18px;
+      background: rgba(246, 250, 255, 0.96);
+      border: 3px solid rgba(38, 107, 157, 0.78);
+      border-radius: 14px;
+      color: #121212;
+      padding: 16px 22px 12px;
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
+    }
+    .sp-stack-card h3 {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 3.3rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      font-weight: 900;
+    }
+    .sp-flow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+    .sp-flow-item {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+    .sp-flow-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .sp-flow-text {
+      font-size: clamp(0.62rem, 0.92vw, 1.28rem);
+      line-height: 1.05;
+      font-weight: 700;
+      text-wrap: balance;
+    }
+    .sp-arrow {
+      text-align: center;
+      align-self: center;
+      font-size: clamp(1.5rem, 2vw, 2.4rem);
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      transform: translateY(-6px);
+    }
+    .sp-bucket-row {
+      width: min(100%, 1230px);
+      margin: -10px auto 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+    .sp-bucket {
+      position: relative;
+      border-radius: 0 0 20px 20px;
+      overflow: hidden;
+      color: #121212;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(0, 0, 0, 0.12);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background: #f4f4f4;
+    }
+    .sp-bucket::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+    .sp-bucket-head {
+      text-align: center;
+      font-size: clamp(1.25rem, 2.1vw, 2rem);
+      font-weight: 900;
+      line-height: 1;
+      padding: 58px 18px 10px;
+      letter-spacing: -0.02em;
+      border-top: 14px solid transparent;
+    }
+    .sp-bucket-tag {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(0.95rem, 1.5vw, 1.5rem);
+      font-weight: 900;
+      white-space: nowrap;
+      color: #121212;
+      text-transform: none;
+      letter-spacing: -0.01em;
+    }
+    .sp-bucket-copy {
+      font-size: clamp(0.9rem, 1.2vw, 1.65rem);
+      line-height: 1.15;
+      text-align: center;
+      font-weight: 700;
+      padding: 0 18px 12px;
+    }
+    .sp-badge-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      margin-top: auto;
+      padding: 0 14px 12px;
+    }
+    .sp-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      border: 1px solid rgba(18, 18, 18, 0.35);
+      background: rgba(255, 255, 255, 0.75);
+      color: #101010;
+      font-weight: 800;
+      font-size: clamp(0.52rem, 0.76vw, 1rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      min-width: 106px;
+      padding: 4px 8px;
+    }
+    .bucket-1 {
+      background: linear-gradient(180deg, #f2f4f5 0%, #d8d9d9 26%, #f4f5f5 80%);
+      transform: perspective(700px) rotateY(5deg) rotateX(1deg);
+    }
+    .bucket-1 .sp-bucket-head {
+      color: #f4f6f6;
+      background: linear-gradient(180deg, #737f84 0%, #4d5559 100%);
+      border-top-color: rgba(181, 188, 190, 0.95);
+    }
+    .bucket-2 {
+      background: linear-gradient(180deg, #ffedd5 0%, #fbbf24 35%, #f59e0b 57%, #ffe7c2 85%);
+      transform: translateY(-6px);
+    }
+    .bucket-2 .sp-bucket-head {
+      color: #fff2d3;
+      background: linear-gradient(180deg, #e08d14 0%, #bf5f00 100%);
+      border-top-color: rgba(255, 225, 176, 0.95);
+    }
+    .bucket-3 {
+      background: linear-gradient(180deg, #f3ecff 0%, #d8b4fe 30%, #7e22ce 54%, #f2eaff 86%);
+      transform: perspective(700px) rotateY(-5deg) rotateX(1deg);
+    }
+    .bucket-3 .sp-bucket-head {
+      color: #f7eeff;
+      background: linear-gradient(180deg, #5b2c88 0%, #48206e 100%);
+      border-top-color: rgba(221, 196, 255, 0.95);
+    }
+    .sp-category-statement {
+      text-align: center;
+      margin: 10px auto 20px;
+      font-size: clamp(1.2rem, 2.2vw, 2.8rem);
+      font-weight: 900;
+      color: #070707;
+      line-height: 1.07;
+      max-width: 1200px;
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 10px;
+      padding: 12px 18px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+    }
+    .sp-red-panel {
+      width: min(100%, 1260px);
+      margin: 0 auto;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(190, 42, 35, 0.45);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      padding: 12px;
+    }
+    .sp-red-title {
+      font-size: clamp(1.35rem, 2.3vw, 3rem);
+      line-height: 1;
+      text-align: center;
+      color: #9f1413;
+      font-weight: 900;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .sp-red-title::before,
+    .sp-red-title::after {
+      content: "";
+      position: absolute;
+      top: 55%;
+      width: 33%;
+      border-top: 4px solid rgba(177, 26, 26, 0.72);
+    }
+    .sp-red-title::before {
+      left: 0;
+    }
+    .sp-red-title::after {
+      right: 0;
+    }
+    .sp-red-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .sp-red-card {
+      border-radius: 12px;
+      border: 2px solid rgba(145, 12, 12, 0.55);
+      overflow: hidden;
+      background: #f7f7f7;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      min-height: 206px;
+    }
+    .sp-red-card-head {
+      background: linear-gradient(180deg, #c11818 0%, #a80f0f 100%);
+      color: #fff;
+      text-align: center;
+      padding: 10px 10px 8px;
+      font-size: clamp(1rem, 1.52vw, 1.85rem);
+      font-weight: 900;
+      line-height: 1.02;
+      min-height: 74px;
+      display: grid;
+      place-items: center;
+      letter-spacing: -0.01em;
+    }
+    .sp-red-card-body {
+      color: #111;
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: clamp(0.82rem, 1.07vw, 1.35rem);
+      line-height: 1.1;
+      font-weight: 800;
+    }
+    .sp-red-card-body p {
+      position: relative;
+      padding-left: 12px;
+    }
+    .sp-red-card-body p::before {
+      content: "\2022";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #181818;
+      font-size: 1.1em;
+      line-height: 1;
+    }
+    @media (max-width: 1180px) {
+      .sp-flow {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: 12px;
+      }
+      .sp-arrow {
+        display: none;
+      }
+      .sp-bucket-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 6px;
+      }
+      .bucket-1,
+      .bucket-2,
+      .bucket-3 {
+        transform: none;
+      }
+      .sp-red-title::before,
+      .sp-red-title::after {
+        display: none;
+      }
+      .sp-red-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 760px) {
+      #horizontal-wrapper > section#thesis {
+        padding-inline: 14px;
+      }
+      .sp-main-headline {
+        font-size: clamp(1.6rem, 7vw, 2.3rem);
+      }
+      .sp-stack-card {
+        padding: 12px;
+      }
+      .sp-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .sp-red-grid {
+        grid-template-columns: 1fr;
+      }
+      .sp-red-card {
+        min-height: 0;
+      }
+    }
   </style>
 
 <body>
@@ -82,9 +410,9 @@
     </div>
     <div class="version-switcher">
       <a href="index.html">Version 1</a>
-      <a href="v2.html" class="active">Version 2</a>
+      <a href="v2.html">Version 2</a>
       <a href="v3.html">Version 3</a>
-      <a href="v4.html">Version 4</a>
+      <a href="v4.html" class="active">Version 4</a>
     </div>
   </nav>
 
@@ -465,38 +793,105 @@
   <!-- ══════════════════════════════════════════
      S10 – INVESTMENT THESIS / CLOSE
      ══════════════════════════════════════════ -->
-  <section id="thesis">
+  <section id="thesis" class="strategic-positioning">
     <div class="section-inner">
-      <div class="label reveal" style="text-align:center;display:block;">Investment Thesis</div>
-      <h2 class="headline reveal reveal-delay-1" style="text-align:center;max-width:900px;margin:0 auto;">
-        Relay sits at the intersection of massive market need, technical defensibility, and <span
-          class="headline-accent">margin recovery</span>.
-      </h2>
-      <div class="thesis-grid grid-2x2 reveal reveal-delay-2">
-        <div class="glass-card thesis-card">
-          <div class="number">01</div>
-          <h3>Massive Constrained Market</h3>
-          <p>15K facilities. 1.3M residents. $180B+ spend. Staffing gap persists.</p>
-        </div>
-        <div class="glass-card thesis-card">
-          <div class="number">02</div>
-          <h3>Technical Moat</h3>
-          <p>Orchestration moat: intelligence layer, not commodity hardware.</p>
-        </div>
-        <div class="glass-card thesis-card">
-          <div class="number">03</div>
-          <h3>Defensible Economics</h3>
-          <p>Sticky revenue, high switching costs, stronger density economics.</p>
-        </div>
-        <div class="glass-card thesis-card">
-          <div class="number">04</div>
-          <h3>Empowers Staff, Doesn't Replace Care</h3>
-          <p>Empowers staff, not replaces them.</p>
+      <div class="sp-title-wrap reveal">
+        <div class="label" style="display:block;text-align:center;">Strategic Positioning</div>
+        <h2 class="headline sp-main-headline">The Market Sells Fragments. Carbon Is Building the Full Stack.</h2>
+      </div>
+
+      <div class="sp-stack-card reveal reveal-delay-1">
+        <h3>MSI = the full stack</h3>
+        <div class="sp-flow">
+          <div class="sp-flow-item">
+            <div class="sp-flow-icon">&#129302;</div>
+            <div class="sp-flow-text">learn</div>
+          </div>
+          <div class="sp-arrow">&#8594;</div>
+          <div class="sp-flow-item">
+            <div class="sp-flow-icon">&#129504;</div>
+            <div class="sp-flow-text">machine intelligence</div>
+          </div>
+          <div class="sp-arrow">&#8594;</div>
+          <div class="sp-flow-item">
+            <div class="sp-flow-icon">&#127760;</div>
+            <div class="sp-flow-text">agentic fleet coordination</div>
+          </div>
+          <div class="sp-arrow">&#8594;</div>
+          <div class="sp-flow-item">
+            <div class="sp-flow-icon">&#129302;</div>
+            <div class="sp-flow-text">deployment across form factors</div>
+          </div>
         </div>
       </div>
-      <div class="thesis-cta reveal reveal-delay-3">
-        <p>Move before this category consolidates.</p>
-        <a href="mailto:invest@carbonorigins.com" class="btn btn-primary btn-arrow">Let's Talk</a>
+
+      <div class="sp-bucket-row reveal reveal-delay-2">
+        <article class="sp-bucket bucket-1">
+          <div class="sp-bucket-tag">Bucket 1</div>
+          <div class="sp-bucket-head">Purpose-Built Robots</div>
+          <div class="sp-bucket-copy">Great hardware,<br>narrow embodiment</div>
+          <div class="sp-badge-row">
+            <span class="sp-badge">ROBOFORGE</span>
+            <span class="sp-badge">STEELWORKS</span>
+            <span class="sp-badge">KINETIC</span>
+          </div>
+        </article>
+
+        <article class="sp-bucket bucket-2">
+          <div class="sp-bucket-tag">Bucket 2</div>
+          <div class="sp-bucket-head">OEM-Native Systems</div>
+          <div class="sp-bucket-copy">Strong inside one<br>OEM, locked stack</div>
+          <div class="sp-badge-row">
+            <span class="sp-badge">TERRA-BOTS</span>
+            <span class="sp-badge">NETWOOFB</span>
+          </div>
+        </article>
+
+        <article class="sp-bucket bucket-3">
+          <div class="sp-bucket-tag">Bucket 3</div>
+          <div class="sp-bucket-head">Point-Solution Retrofit</div>
+          <div class="sp-bucket-copy">Useful wedge,<br>not a platform</div>
+          <div class="sp-badge-row">
+            <span class="sp-badge">MODU TECH</span>
+            <span class="sp-badge">RETRO-TASK</span>
+          </div>
+        </article>
+      </div>
+
+      <p class="sp-category-statement reveal reveal-delay-3">The market sells partial answers. MSI is the ficategory that unifies unifies the full machine-labor stack.</p>
+
+      <div class="sp-red-panel reveal reveal-delay-4">
+        <div class="sp-red-title">Why Carbon Wins MSI</div>
+        <div class="sp-red-grid">
+          <article class="sp-red-card">
+            <div class="sp-red-card-head">De-risked deployment model</div>
+            <div class="sp-red-card-body">
+              <p>lower customer risk</p>
+              <p>minimal custom engineering</p>
+            </div>
+          </article>
+          <article class="sp-red-card">
+            <div class="sp-red-card-head">Expert operator data engine</div>
+            <div class="sp-red-card-body">
+              <p>direct XR training data loop</p>
+              <p>higher-fidelity operator intent data</p>
+            </div>
+          </article>
+          <article class="sp-red-card">
+            <div class="sp-red-card-head">Machine controls moat</div>
+            <div class="sp-red-card-body">
+              <p>multi-OEM control library</p>
+              <p>each cracked machine family compounds deployment speed and cost advantage</p>
+            </div>
+          </article>
+          <article class="sp-red-card">
+            <div class="sp-red-card-head">Attachment partner flywheel</div>
+            <div class="sp-red-card-body">
+              <p>workflow-specific data + GTM leverage</p>
+              <p>partners help train and distribute</p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
