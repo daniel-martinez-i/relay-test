@@ -430,7 +430,7 @@
       background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
       backdrop-filter: blur(8px);
       box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      padding: 18px 18px 56px;
+      padding: 24px 24px 56px;
       opacity: 0;
       transform: translateY(20px) scale(0.99);
       transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
@@ -441,7 +441,7 @@
     }
     #landscape-canvas {
       width: 100%;
-      height: 350px;
+      height: 480px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: radial-gradient(circle at 50% 45%, rgba(18, 24, 35, 0.84), rgba(8, 10, 16, 0.95));
@@ -499,17 +499,17 @@
     .legend-chip.startup { border-color: rgba(129, 140, 248, 0.5); }
     .landscape-tooltip {
       position: absolute;
-      min-width: 220px;
-      max-width: 280px;
-      padding: 8px 10px;
+      min-width: 240px;
+      max-width: 320px;
+      padding: 12px 14px;
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.22);
       background: rgba(7, 9, 13, 0.94);
       box-shadow: 0 14px 24px rgba(0, 0, 0, 0.4);
       color: var(--text-primary);
-      font-size: 0.77rem;
-      line-height: 1.35;
-      pointer-events: none;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      pointer-events: auto;
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -518,6 +518,7 @@
     .landscape-tooltip.show {
       opacity: 1;
       transform: translateY(0);
+      pointer-events: auto;
     }
     .landscape-tooltip strong {
       display: block;
@@ -572,7 +573,7 @@
     }
     @media (max-width: 1100px) {
       #landscape-canvas {
-        height: 320px;
+        height: 420px;
       }
       .axis-hints {
         grid-template-columns: 1fr;
@@ -586,7 +587,7 @@
         padding: 12px 12px 52px;
       }
       #landscape-canvas {
-        height: 280px;
+        height: 360px;
       }
       .cluster-legend {
         position: static;
@@ -1452,6 +1453,8 @@
       angle: 0,
       pulse: 0,
       hoveredId: null,
+      tooltipHover: false,
+      hideTimer: null,
       dpr: 1,
       width: 0,
       height: 0,
@@ -1473,7 +1476,8 @@
           color: '#ff5a5a',
           point: { x: 0.92, y: 0.94, z: 0.93 },
           radius: 8.5,
-          detail: 'Only agentic, full-stack, cross-application platform'
+          detail: 'Only agentic, full-stack, cross-application platform',
+          link: 'https://www.carbonorigins.com'
         },
         {
           id: 'bluelight',
@@ -1576,12 +1580,32 @@
 
         if (!hovered) {
           mapState.hoveredId = null;
-          hideMapTooltip();
+          if (!mapState.tooltipHover) {
+            hideMapTooltip();
+          }
           return;
         }
 
+        mapState.tooltipHover = false;
+        if (mapState.hideTimer) {
+          clearTimeout(mapState.hideTimer);
+          mapState.hideTimer = null;
+        }
         mapState.hoveredId = hovered.id;
         showMapTooltip(hovered.node, hovered.x, hovered.y);
+      });
+
+      mapTooltip.addEventListener('mouseenter', () => {
+        mapState.tooltipHover = true;
+        if (mapState.hideTimer) {
+          clearTimeout(mapState.hideTimer);
+          mapState.hideTimer = null;
+        }
+      });
+
+      mapTooltip.addEventListener('mouseleave', () => {
+        mapState.tooltipHover = false;
+        hideMapTooltip();
       });
     }
 
@@ -1605,8 +1629,8 @@
       const depth = rotated.z + 2.35;
       const scale = mapState.perspective / (depth * mapState.perspective);
       return {
-        x: mapState.cx + rotated.x * 260 * scale,
-        y: mapState.cy - rotated.y * 210 * scale,
+        x: mapState.cx + rotated.x * 320 * scale,
+        y: mapState.cy - rotated.y * 270 * scale,
         z: rotated.z,
         scale,
         depth
@@ -1684,7 +1708,7 @@
         const isCarbon = node.cluster === 'carbon';
         const radiusBoost = hovered ? 1.22 : 1;
         const pulse = isCarbon ? (1 + Math.sin(mapState.pulse) * 0.07) : 1;
-        const baseRadius = node.radius * projected.scale * 3.25;
+        const baseRadius = node.radius * projected.scale * 4.2;
         const radius = Math.max(3.8, baseRadius * radiusBoost * pulse);
 
         const glow = ctx.createRadialGradient(
@@ -1728,7 +1752,7 @@
       let candidate = null;
 
       mapState.nodePositions.forEach((entry) => {
-        const radius = Math.max(8, entry.node.radius * entry.projected.scale * 4.1);
+        const radius = Math.max(8, entry.node.radius * entry.projected.scale * 5.2);
         const dx = x - entry.projected.x;
         const dy = y - entry.projected.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -1753,11 +1777,20 @@
       const shellRect = mapCanvas.parentElement.getBoundingClientRect();
       const canvasRect = mapCanvas.getBoundingClientRect();
 
-      mapTooltip.innerHTML = `<strong>${node.label}</strong>${node.detail}`;
+      let tooltipHTML = `<strong>${node.label}</strong>`;
+
+      if (node.cluster === 'carbon') {
+        tooltipHTML += `<div style="margin-top: 6px; line-height: 1.45;">Carbon uniquely sits at the frontier by integrating orchestration, intelligence, and deployment capabilities that competitors cannot combine at scale independently.</div>`;
+        tooltipHTML += `<div style="margin-top: 8px;"><a href="https://www.carbonorigins.com" target="_blank" rel="noopener noreferrer" style="color: rgba(255, 110, 110, 0.95); text-decoration: none; font-weight: 700; font-size: 0.75rem; transition: color 0.2s ease;">Why Carbon Leads →</a></div>`;
+      } else {
+        tooltipHTML += `<div style="margin-top: 4px;">${node.detail}</div>`;
+      }
+
+      mapTooltip.innerHTML = tooltipHTML;
       mapTooltip.classList.add('show');
       mapTooltip.setAttribute('aria-hidden', 'false');
 
-      const tooltipWidth = Math.min(280, shellRect.width - 20);
+      const tooltipWidth = Math.min(320, shellRect.width - 20);
       mapTooltip.style.maxWidth = `${tooltipWidth}px`;
 
       const left = Math.min(shellRect.width - tooltipWidth - 8, Math.max(8, (canvasRect.left - shellRect.left) + x + 12));
@@ -1768,8 +1801,14 @@
     }
 
     function hideMapTooltip() {
-      mapTooltip.classList.remove('show');
-      mapTooltip.setAttribute('aria-hidden', 'true');
+      if (mapState.hideTimer) {
+        clearTimeout(mapState.hideTimer);
+      }
+      mapState.hideTimer = setTimeout(() => {
+        mapTooltip.classList.remove('show');
+        mapTooltip.setAttribute('aria-hidden', 'true');
+        mapState.hideTimer = null;
+      }, 150);
     }
 
     function renderStrategicMap() {
@@ -1833,6 +1872,13 @@
       sections.forEach(section => {
         const inner = section.querySelector('.section-inner');
         if (!inner) return;
+
+        // Exempt strategic map section from scaling
+        if (section.id === 'thesis' && section.classList.contains('strategic-map')) {
+          inner.style.transform = 'scale(1)';
+          inner.style.width = '';
+          return;
+        }
 
         inner.style.transform = 'scale(1)';
         inner.style.width = '';
