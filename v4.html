@@ -601,6 +601,85 @@
         grid-template-columns: 1fr;
       }
     }
+    /* Version 4 - Static reference map */
+    #thesis-reference.strategic-reference {
+      background:
+        radial-gradient(circle at 12% 16%, rgba(148, 163, 184, 0.14), transparent 34%),
+        radial-gradient(circle at 82% 12%, rgba(203, 213, 225, 0.1), transparent 34%),
+        linear-gradient(180deg, #090c12 0%, #080a10 52%, #07090e 100%);
+    }
+    #thesis-reference.strategic-reference .section-inner {
+      max-width: 1260px;
+    }
+    .reference-map-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .reference-map-header {
+      text-align: center;
+    }
+    .reference-map-headline {
+      font-size: clamp(1.7rem, 2.9vw, 2.5rem);
+      max-width: 980px;
+      margin: 0 auto;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+    .reference-map-shell {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      padding: 22px 22px 56px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.99);
+      transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+    }
+    #thesis-reference.strategic-reference.is-active .reference-map-shell {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    #reference-map-canvas {
+      width: 100%;
+      height: 500px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: radial-gradient(circle at 50% 48%, rgba(15, 19, 27, 0.9), rgba(8, 10, 16, 0.98));
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+    #reference-map-canvas.is-dragging {
+      cursor: grabbing;
+    }
+    .reference-axis-hints .axis-hint {
+      border-color: rgba(203, 213, 225, 0.2);
+      color: rgba(225, 230, 236, 0.82);
+    }
+    .reference-map-note {
+      font-size: 0.75rem;
+      color: rgba(203, 213, 225, 0.78);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-top: 10px;
+    }
+    @media (max-width: 1100px) {
+      #reference-map-canvas {
+        height: 430px;
+      }
+    }
+    @media (max-width: 760px) {
+      .reference-map-shell {
+        padding: 12px 12px 52px;
+      }
+      #reference-map-canvas {
+        height: 360px;
+      }
+    }
   </style>
 
 <body>
@@ -631,6 +710,7 @@
     <a href="#proof" data-label="Proof"></a>
     <a href="#scaling" data-label="Scale"></a>
     <a href="#thesis" data-label="Invest"></a>
+    <a href="#thesis-reference" data-label="Spatial"></a>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -1045,6 +1125,30 @@
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════
+     S11 – STRATEGIC SPATIAL REFERENCE
+     ══════════════════════════════════════════ -->
+  <section id="thesis-reference" class="strategic-reference">
+    <div class="section-inner reference-map-inner">
+      <div class="reference-map-header reveal">
+        <div class="label" style="display:block;text-align:center;">Spatial Reference View</div>
+        <h2 class="headline reference-map-headline">Static quadrant guides make the 3D competitor position easier to read at a glance.</h2>
+      </div>
+
+      <div class="reference-map-shell reveal reveal-delay-1" id="reference-map-shell">
+        <canvas id="reference-map-canvas" aria-label="Static 3D competitor landscape reference"></canvas>
+
+        <div class="axis-hints reference-axis-hints">
+          <div class="axis-hint">X: Automation intelligence (classical to agentic)</div>
+          <div class="axis-hint">Y: Solution scope (components to full stack)</div>
+          <div class="axis-hint">Z: Cross-application scalability (narrow to transferable)</div>
+        </div>
+
+        <div class="reference-map-note">Static by default. Hover or drag to inspect depth, then it settles back.</div>
+      </div>
+    </div>
+  </section>
+
   </div>
 
   <button class="scroll-arrow-btn" id="scroll-left" onclick="scrollH('left')" aria-label="Scroll Left">←</button>
@@ -1442,6 +1546,7 @@
     const wrapper = document.getElementById('horizontal-wrapper');
     const sections = Array.from(wrapper.querySelectorAll('section'));
     const thesisSection = document.getElementById('thesis');
+    const referenceSection = document.getElementById('thesis-reference');
     let currentIndex = 0;
     let wheelLocked = false;
 
@@ -1465,10 +1570,34 @@
       nodePositions: []
     };
 
-    function initStrategicMap() {
-      if (!mapCanvas || !mapTooltip) return;
+    const referenceCanvas = document.getElementById('reference-map-canvas');
+    const referenceState = {
+      ready: false,
+      active: false,
+      pointerInside: false,
+      dragging: false,
+      driftPhase: 0,
+      yawBase: 0.36,
+      pitchBase: -0.31,
+      yawOffset: 0,
+      pitchOffset: 0,
+      yawCurrent: 0.36,
+      pitchCurrent: -0.31,
+      dragStartX: 0,
+      dragStartY: 0,
+      dragStartYawOffset: 0,
+      dragStartPitchOffset: 0,
+      dpr: 1,
+      width: 0,
+      height: 0,
+      cx: 0,
+      cy: 0,
+      perspective: 460,
+      nodes: []
+    };
 
-      mapState.nodes = [
+    function createStrategicNodes() {
+      return [
         {
           id: 'carbon',
           label: 'Carbon Origins',
@@ -1534,6 +1663,12 @@
           detail: 'Strong in selected dimensions, but partial versus Carbon frontier'
         }
       ];
+    }
+
+    function initStrategicMap() {
+      if (!mapCanvas || !mapTooltip) return;
+
+      mapState.nodes = createStrategicNodes();
 
       resizeStrategicMap();
       bindStrategicMapHover();
@@ -1626,11 +1761,15 @@
     }
 
     function projectPoint(rotated) {
+      return projectPointWithState(rotated, mapState);
+    }
+
+    function projectPointWithState(rotated, state) {
       const depth = rotated.z + 2.35;
-      const scale = mapState.perspective / (depth * mapState.perspective);
+      const scale = state.perspective / (depth * state.perspective);
       return {
-        x: mapState.cx + rotated.x * 320 * scale,
-        y: mapState.cy - rotated.y * 270 * scale,
+        x: state.cx + rotated.x * 320 * scale,
+        y: state.cy - rotated.y * 270 * scale,
         z: rotated.z,
         scale,
         depth
@@ -1842,14 +1981,280 @@
       requestAnimationFrame(renderStrategicMap);
     }
 
+    function initReferenceMap() {
+      if (!referenceCanvas) return;
+
+      referenceState.nodes = createStrategicNodes();
+      resizeReferenceMap();
+      bindReferenceMapInteraction();
+      referenceState.ready = true;
+      requestAnimationFrame(renderReferenceMap);
+    }
+
+    function resizeReferenceMap() {
+      if (!referenceCanvas) return;
+
+      const rect = referenceCanvas.getBoundingClientRect();
+      referenceState.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      referenceState.width = Math.max(320, Math.floor(rect.width));
+      referenceState.height = Math.max(220, Math.floor(rect.height));
+      referenceState.cx = referenceState.width / 2;
+      referenceState.cy = referenceState.height / 2;
+
+      referenceCanvas.width = Math.floor(referenceState.width * referenceState.dpr);
+      referenceCanvas.height = Math.floor(referenceState.height * referenceState.dpr);
+
+      const ctx = referenceCanvas.getContext('2d');
+      if (ctx) {
+        ctx.setTransform(referenceState.dpr, 0, 0, referenceState.dpr, 0, 0);
+      }
+    }
+
+    function bindReferenceMapInteraction() {
+      if (!referenceCanvas) return;
+
+      referenceCanvas.addEventListener('pointerenter', () => {
+        referenceState.pointerInside = true;
+      });
+
+      referenceCanvas.addEventListener('pointerleave', () => {
+        referenceState.pointerInside = false;
+        referenceState.dragging = false;
+        referenceCanvas.classList.remove('is-dragging');
+      });
+
+      referenceCanvas.addEventListener('pointerdown', (event) => {
+        if (!referenceState.active) return;
+        referenceState.dragging = true;
+        referenceState.pointerInside = true;
+        referenceState.dragStartX = event.clientX;
+        referenceState.dragStartY = event.clientY;
+        referenceState.dragStartYawOffset = referenceState.yawOffset;
+        referenceState.dragStartPitchOffset = referenceState.pitchOffset;
+        referenceCanvas.classList.add('is-dragging');
+        referenceCanvas.setPointerCapture(event.pointerId);
+      });
+
+      referenceCanvas.addEventListener('pointermove', (event) => {
+        if (!referenceState.dragging) return;
+
+        const dx = event.clientX - referenceState.dragStartX;
+        const dy = event.clientY - referenceState.dragStartY;
+        referenceState.yawOffset = Math.max(-0.58, Math.min(0.58, referenceState.dragStartYawOffset + dx * 0.0042));
+        referenceState.pitchOffset = Math.max(-0.24, Math.min(0.24, referenceState.dragStartPitchOffset + dy * 0.0034));
+      });
+
+      const stopDragging = (event) => {
+        if (!referenceState.dragging) return;
+        referenceState.dragging = false;
+        referenceCanvas.classList.remove('is-dragging');
+        if (event && typeof event.pointerId === 'number' && referenceCanvas.hasPointerCapture(event.pointerId)) {
+          referenceCanvas.releasePointerCapture(event.pointerId);
+        }
+      };
+
+      referenceCanvas.addEventListener('pointerup', stopDragging);
+      referenceCanvas.addEventListener('pointercancel', stopDragging);
+    }
+
+    function projectReferencePoint(rotated) {
+      return projectPointWithState(rotated, referenceState);
+    }
+
+    function drawReferenceLine(ctx, yaw, pitch, start, end, color, width) {
+      const p1 = projectReferencePoint(rotatePoint(start, yaw, pitch));
+      const p2 = projectReferencePoint(rotatePoint(end, yaw, pitch));
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+    }
+
+    function drawReferenceGuides(ctx, yaw, pitch) {
+      const min = -0.02;
+      const max = 1.02;
+      const mid = 0.5;
+      const guideValues = [min, mid, max];
+
+      guideValues.forEach((value) => {
+        drawReferenceLine(ctx, yaw, pitch, { x: min, y: value, z: mid }, { x: max, y: value, z: mid }, 'rgba(203, 213, 225, 0.2)', 1);
+        drawReferenceLine(ctx, yaw, pitch, { x: value, y: min, z: mid }, { x: value, y: max, z: mid }, 'rgba(203, 213, 225, 0.2)', 1);
+
+        drawReferenceLine(ctx, yaw, pitch, { x: mid, y: value, z: min }, { x: mid, y: value, z: max }, 'rgba(203, 213, 225, 0.18)', 1);
+        drawReferenceLine(ctx, yaw, pitch, { x: value, y: mid, z: min }, { x: value, y: mid, z: max }, 'rgba(203, 213, 225, 0.18)', 1);
+
+        drawReferenceLine(ctx, yaw, pitch, { x: value, y: min, z: value }, { x: value, y: max, z: value }, 'rgba(203, 213, 225, 0.14)', 1);
+        drawReferenceLine(ctx, yaw, pitch, { x: min, y: value, z: value }, { x: max, y: value, z: value }, 'rgba(203, 213, 225, 0.14)', 1);
+      });
+
+      const corners = [
+        { x: min, y: min, z: min },
+        { x: max, y: min, z: min },
+        { x: max, y: max, z: min },
+        { x: min, y: max, z: min },
+        { x: min, y: min, z: max },
+        { x: max, y: min, z: max },
+        { x: max, y: max, z: max },
+        { x: min, y: max, z: max }
+      ];
+      const edgePairs = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7]
+      ];
+
+      edgePairs.forEach((pair) => {
+        drawReferenceLine(ctx, yaw, pitch, corners[pair[0]], corners[pair[1]], 'rgba(226, 232, 240, 0.16)', 1.1);
+      });
+    }
+
+    function drawReferenceAxis(ctx, yaw, pitch) {
+      const origin = projectReferencePoint(rotatePoint({ x: 0, y: 0, z: 0 }, yaw, pitch));
+      const xEnd = projectReferencePoint(rotatePoint({ x: 1.08, y: 0, z: 0 }, yaw, pitch));
+      const yEnd = projectReferencePoint(rotatePoint({ x: 0, y: 1.08, z: 0 }, yaw, pitch));
+      const zEnd = projectReferencePoint(rotatePoint({ x: 0, y: 0, z: 1.08 }, yaw, pitch));
+
+      ctx.lineWidth = 1.5;
+
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.52)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(xEnd.x, xEnd.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.44)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(yEnd.x, yEnd.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.38)';
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(zEnd.x, zEnd.y);
+      ctx.stroke();
+    }
+
+    function drawReferenceNodes(ctx, yaw, pitch) {
+      const projectedNodes = referenceState.nodes.map((node) => {
+        const rotated = rotatePoint(node.point, yaw, pitch);
+        const projected = projectReferencePoint(rotated);
+        return { node, projected };
+      });
+
+      projectedNodes.sort((a, b) => a.projected.depth - b.projected.depth);
+
+      projectedNodes.forEach((entry) => {
+        const { node, projected } = entry;
+        const isCarbon = node.cluster === 'carbon';
+        const baseRadius = node.radius * projected.scale * 4;
+        const radius = Math.max(3.8, baseRadius * (isCarbon ? 1.12 : 1));
+
+        const glow = ctx.createRadialGradient(
+          projected.x,
+          projected.y,
+          radius * 0.2,
+          projected.x,
+          projected.y,
+          radius * (isCarbon ? 3.2 : 2.15)
+        );
+        glow.addColorStop(0, isCarbon ? 'rgba(255, 110, 110, 0.62)' : `${node.color}66`);
+        glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.15 : 1.6), 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = node.color;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.74)';
+        ctx.lineWidth = isCarbon ? 1.8 : 1;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const showLabel = isCarbon || projected.scale > 0.46;
+        if (showLabel) {
+          ctx.fillStyle = isCarbon ? '#ffecec' : 'rgba(226, 232, 240, 0.9)';
+          ctx.font = `600 ${isCarbon ? 12 : 10}px Inter, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(node.label, projected.x, projected.y - (radius + 7));
+        }
+      });
+    }
+
+    function renderReferenceMap() {
+      if (!referenceState.ready || !referenceCanvas) {
+        requestAnimationFrame(renderReferenceMap);
+        return;
+      }
+
+      const ctx = referenceCanvas.getContext('2d');
+      if (!ctx) {
+        requestAnimationFrame(renderReferenceMap);
+        return;
+      }
+
+      if (referenceState.active) {
+        let hoverYaw = 0;
+        let hoverPitch = 0;
+
+        if (referenceState.pointerInside && !referenceState.dragging) {
+          referenceState.driftPhase += 0.03;
+          hoverYaw = Math.sin(referenceState.driftPhase) * 0.08;
+          hoverPitch = Math.cos(referenceState.driftPhase * 0.85) * 0.04;
+        }
+
+        const targetYawOffset = referenceState.pointerInside ? referenceState.yawOffset + hoverYaw : 0;
+        const targetPitchOffset = referenceState.pointerInside ? referenceState.pitchOffset + hoverPitch : 0;
+        const targetYaw = referenceState.yawBase + targetYawOffset;
+        const targetPitch = referenceState.pitchBase + targetPitchOffset;
+
+        referenceState.yawCurrent += (targetYaw - referenceState.yawCurrent) * 0.11;
+        referenceState.pitchCurrent += (targetPitch - referenceState.pitchCurrent) * 0.11;
+
+        if (!referenceState.pointerInside) {
+          referenceState.yawOffset *= 0.86;
+          referenceState.pitchOffset *= 0.86;
+        }
+      } else {
+        referenceState.pointerInside = false;
+        referenceState.dragging = false;
+        referenceState.yawOffset *= 0.88;
+        referenceState.pitchOffset *= 0.88;
+        referenceState.yawCurrent += (referenceState.yawBase - referenceState.yawCurrent) * 0.12;
+        referenceState.pitchCurrent += (referenceState.pitchBase - referenceState.pitchCurrent) * 0.12;
+        referenceCanvas.classList.remove('is-dragging');
+      }
+
+      ctx.clearRect(0, 0, referenceState.width, referenceState.height);
+      drawReferenceGuides(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
+      drawReferenceAxis(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
+      drawReferenceNodes(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
+
+      requestAnimationFrame(renderReferenceMap);
+    }
+
     function setStrategicMapActiveState() {
       const thesisIndex = sections.findIndex((section) => section.id === 'thesis');
+      const referenceIndex = sections.findIndex((section) => section.id === 'thesis-reference');
       const active = currentIndex === thesisIndex;
+      const referenceActive = currentIndex === referenceIndex;
 
       if (thesisSection) {
         thesisSection.classList.toggle('is-active', active);
       }
+      if (referenceSection) {
+        referenceSection.classList.toggle('is-active', referenceActive);
+      }
       mapState.active = active;
+      referenceState.active = referenceActive;
       if (!active) {
         mapState.hoveredId = null;
         hideMapTooltip();
@@ -1874,7 +2279,9 @@
         if (!inner) return;
 
         // Exempt strategic map section from scaling
-        if (section.id === 'thesis' && section.classList.contains('strategic-map')) {
+        const isStrategicMap = section.id === 'thesis' && section.classList.contains('strategic-map');
+        const isReferenceMap = section.id === 'thesis-reference' && section.classList.contains('strategic-reference');
+        if (isStrategicMap || isReferenceMap) {
           inner.style.transform = 'scale(1)';
           inner.style.width = '';
           return;
@@ -1947,10 +2354,12 @@
     window.addEventListener('resize', () => {
       fitSlideContent();
       resizeStrategicMap();
+      resizeReferenceMap();
       wrapper.scrollTo({ left: currentIndex * window.innerWidth });
     });
 
     initStrategicMap();
+    initReferenceMap();
     fitSlideContent();
     setStrategicMapActiveState();
 
