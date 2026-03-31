@@ -162,8 +162,8 @@
       color: #121212;
       box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
       border: 2px solid rgba(0, 0, 0, 0.12);
-      min-height: 220px;
-      display: flex;
+            labelFont: '800 9.6px Inter, sans-serif',
+            labelFont: '800 10.4px Inter, sans-serif'
       flex-direction: column;
       justify-content: flex-start;
       background: #f4f4f4;
@@ -398,7 +398,7 @@
         min-height: 0;
       }
     }
-    /* Version 4 - Integrated strategic map */
+    /* Version 4 - Integrated strategic map - DOM CENTERED */
     #thesis.strategic-map {
       background:
         radial-gradient(circle at 14% 10%, rgba(239, 68, 68, 0.16), transparent 34%),
@@ -406,34 +406,49 @@
         linear-gradient(180deg, #0d1018 0%, #0a0d14 58%, #090b12 100%);
     }
     #thesis.strategic-map .section-inner {
-      max-width: 1260px;
+      max-width: 100vw;
+      width: 100% !important;
+      padding: 0 !important;
     }
     .strategic-map-inner {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 0;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      padding: 100px 0 56px 0;
     }
     .sm-header {
       text-align: center;
+      opacity: 0.72;
+      transform: scale(0.92);
+      margin-bottom: 12px;
     }
     .sm-headline {
-      font-size: clamp(1.8rem, 3.1vw, 2.7rem);
-      max-width: 1000px;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      max-width: 920px;
       margin: 0 auto;
       line-height: 1.12;
       letter-spacing: -0.02em;
     }
     .landscape-shell {
       position: relative;
+      width: 94vw;
+      height: calc(100vh - 200px);
+      margin: 0 auto;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 18px;
       background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
       backdrop-filter: blur(8px);
       box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      padding: 24px 24px 56px;
+      padding: 0;
       opacity: 0;
       transform: translateY(20px) scale(0.99);
       transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+      display: flex;
+      flex-direction: column;
     }
     #thesis.strategic-map.is-active .landscape-shell {
       opacity: 1;
@@ -441,9 +456,9 @@
     }
     #landscape-canvas {
       width: 100%;
-      height: 480px;
+      flex: 1;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: none;
       background: radial-gradient(circle at 50% 45%, rgba(18, 24, 35, 0.84), rgba(8, 10, 16, 0.95));
       display: block;
     }
@@ -474,13 +489,7 @@
     .axis-hint.y { border-color: rgba(249, 115, 22, 0.35); }
     .axis-hint.z { border-color: rgba(168, 85, 247, 0.35); }
     .cluster-legend {
-      position: absolute;
-      top: 14px;
-      left: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      pointer-events: none;
+      display: none !important;
     }
     .legend-chip {
       font-size: 0.62rem;
@@ -514,6 +523,7 @@
       transform: translateY(8px);
       transition: opacity 0.2s ease, transform 0.2s ease;
       z-index: 5;
+      display: none;
     }
     .landscape-tooltip.show {
       opacity: 1;
@@ -529,76 +539,183 @@
       margin-bottom: 2px;
     }
     .sm-advantage-strip {
-      border: 1px solid rgba(239, 68, 68, 0.28);
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(127, 29, 29, 0.16), rgba(32, 11, 11, 0.32));
-      padding: 14px 16px;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.75s var(--ease), transform 0.85s var(--ease);
-      transition-delay: 0.16s;
-    }
-    #thesis.strategic-map.is-active .sm-advantage-strip {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .sm-advantage-strip h3 {
-      font-size: clamp(1rem, 1.7vw, 1.45rem);
-      text-align: center;
-      color: #ffd2d2;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-    .sm-advantage-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      display: none !important;
     }
     .sm-advantage-grid article {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
-      padding: 10px;
+      padding: 6px;
       background: rgba(12, 14, 20, 0.64);
-      min-height: 92px;
+      min-height: 56px;
     }
     .sm-advantage-grid h4 {
-      font-size: 0.85rem;
+      font-size: 0.68rem;
       color: #fff2f2;
-      margin-bottom: 6px;
+      margin-bottom: 3px;
     }
     .sm-advantage-grid p {
-      font-size: 0.75rem;
-      line-height: 1.35;
+      font-size: 0.62rem;
+      line-height: 1.22;
       color: rgba(240, 240, 245, 0.78);
+    }
+    @media (max-height: 820px) {
+      .strategic-map-inner {
+        padding: 88px 0 36px 0;
+        height: auto;
+        min-height: 100vh;
+      }
+      .landscape-shell {
+        height: calc(100vh - 180px);
+      }
     }
     @media (max-width: 1100px) {
       #landscape-canvas {
-        height: 420px;
+        flex: 1;
       }
       .axis-hints {
         grid-template-columns: 1fr;
-      }
-      .sm-advantage-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
     @media (max-width: 760px) {
       .landscape-shell {
-        padding: 12px 12px 52px;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: calc(100vh - 150px);
       }
       #landscape-canvas {
-        height: 360px;
-      }
-      .cluster-legend {
-        position: static;
-        margin-bottom: 10px;
+        border-radius: 0;
       }
       .axis-hints {
         left: 12px;
         right: 12px;
-      }
-      .sm-advantage-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    /* Grounded 2x2x2 stage variant */
+    #thesis-grounded.strategic-grounded {
+      background:
+        radial-gradient(circle at 12% 10%, rgba(59, 130, 246, 0.16), transparent 34%),
+        radial-gradient(circle at 78% 18%, rgba(139, 92, 246, 0.14), transparent 42%),
+        linear-gradient(180deg, #06080f 0%, #080b14 55%, #06070d 100%);
+    }
+    #thesis-grounded .section-inner {
+      max-width: 100vw;
+      width: 100%;
+      padding: 0 !important;
+    }
+    .grounded-map-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+      gap: 12px;
+      padding: 96px 0 56px;
+    }
+    .grounded-header {
+      text-align: center;
+      opacity: 0.78;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .grounded-header .headline {
+      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .grounded-shell {
+      position: relative;
+      width: 94vw;
+      height: calc(100vh - 220px);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.05), rgba(6, 8, 14, 0.9));
+      box-shadow: 0 22px 46px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(24px) scale(0.97);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    #thesis-grounded.is-active .grounded-shell {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    #grounded-canvas {
+      width: 100%;
+      flex: 1;
+      border: none;
+      background: radial-gradient(circle at 50% 40%, rgba(18, 24, 35, 0.9), rgba(6, 8, 14, 0.96));
+      display: block;
+    }
+    .axis-gradient-bar {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(236, 242, 255, 0.9);
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 5px 14px;
+      background: rgba(8, 10, 16, 0.78);
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+    }
+    .axis-gradient-bar span:first-child {
+      opacity: 0.65;
+    }
+    .axis-gradient-bar span:last-child {
+      font-weight: 700;
+    }
+    .axis-gradient-x {
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 260px;
+    }
+    .axis-gradient-z {
+      right: 26px;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      min-height: 120px;
+    }
+    .axis-gradient-y {
+      left: 26px;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      min-height: 120px;
+    }
+    @media (max-width: 900px) {
+      .grounded-shell {
+        width: 100vw;
+        border-radius: 0;
+      }
+      .axis-gradient-z,
+      .axis-gradient-y {
+        display: none;
+      }
+    }
+    @media (max-width: 760px) {
+      .grounded-map-inner {
+        padding: 82px 0 36px;
+      }
+      .axis-gradient-x {
+        width: calc(100% - 36px);
       }
     }
     /* Version 4 - Static reference map */
@@ -614,10 +731,14 @@
     .reference-map-inner {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 10px;
+      justify-content: center;
+      min-height: calc(100vh - 120px);
     }
     .reference-map-header {
       text-align: center;
+      opacity: 0.75;
+      transform: scale(0.9);
     }
     .reference-map-headline {
       font-size: clamp(1.7rem, 2.9vw, 2.5rem);
@@ -628,12 +749,14 @@
     }
     .reference-map-shell {
       position: relative;
+      width: min(1240px, 96vw);
+      margin: 0 auto;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 18px;
       background: linear-gradient(155deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
       backdrop-filter: blur(8px);
       box-shadow: 0 20px 44px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      padding: 22px 22px 56px;
+      padding: 16px 16px 52px;
       opacity: 0;
       transform: translateY(20px) scale(0.99);
       transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
@@ -644,7 +767,7 @@
     }
     #reference-map-canvas {
       width: 100%;
-      height: 500px;
+      height: 680px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: radial-gradient(circle at 50% 48%, rgba(15, 19, 27, 0.9), rgba(8, 10, 16, 0.98));
@@ -660,16 +783,17 @@
       color: rgba(225, 230, 236, 0.82);
     }
     .reference-map-note {
-      font-size: 0.75rem;
+      font-size: 0.6rem;
       color: rgba(203, 213, 225, 0.78);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       text-align: center;
-      margin-top: 10px;
+      margin-top: 6px;
+      opacity: 0.72;
     }
     @media (max-width: 1100px) {
       #reference-map-canvas {
-        height: 430px;
+        height: 560px;
       }
     }
     @media (max-width: 760px) {
@@ -677,7 +801,7 @@
         padding: 12px 12px 52px;
       }
       #reference-map-canvas {
-        height: 360px;
+        height: 430px;
       }
     }
   </style>
@@ -710,7 +834,6 @@
     <a href="#proof" data-label="Proof"></a>
     <a href="#scaling" data-label="Scale"></a>
     <a href="#thesis" data-label="Invest"></a>
-    <a href="#thesis-reference" data-label="Spatial"></a>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -1126,25 +1249,32 @@
   </section>
 
   <!-- ══════════════════════════════════════════
-     S11 – STRATEGIC SPATIAL REFERENCE
+     S11 – GROUNDED GRID VARIANT
      ══════════════════════════════════════════ -->
-  <section id="thesis-reference" class="strategic-reference">
-    <div class="section-inner reference-map-inner">
-      <div class="reference-map-header reveal">
-        <div class="label" style="display:block;text-align:center;">Spatial Reference View</div>
-        <h2 class="headline reference-map-headline">Static quadrant guides make the 3D competitor position easier to read at a glance.</h2>
+  <section id="thesis-grounded" class="strategic-grounded">
+    <div class="section-inner grounded-map-inner">
+      <div class="grounded-header reveal">
+        <div class="label" style="display:block;text-align:center;">Grounded Competitive Contrast</div>
+        <h2 class="headline">Same data, simplified into a locked 2×2×2 stage that makes market gradients unmistakable.</h2>
+        <p class="subheadline" style="margin-top:12px;">
+          A fixed, front-isometric camera keeps perspective honest while drop-lines and wall gradients orient the viewer instantly.
+        </p>
       </div>
 
-      <div class="reference-map-shell reveal reveal-delay-1" id="reference-map-shell">
-        <canvas id="reference-map-canvas" aria-label="Static 3D competitor landscape reference"></canvas>
-
-        <div class="axis-hints reference-axis-hints">
-          <div class="axis-hint">X: Automation intelligence (classical to agentic)</div>
-          <div class="axis-hint">Y: Solution scope (components to full stack)</div>
-          <div class="axis-hint">Z: Cross-application scalability (narrow to transferable)</div>
+      <div class="grounded-shell reveal reveal-delay-1" id="grounded-shell">
+        <canvas id="grounded-canvas" aria-label="Grounded 2 by 2 by 2 market landscape"></canvas>
+        <div class="axis-gradient-bar axis-gradient-x">
+          <span>Single Market</span>
+          <span>Multi-Market</span>
         </div>
-
-        <div class="reference-map-note">Static by default. Hover or drag to inspect depth, then it settles back.</div>
+        <div class="axis-gradient-bar axis-gradient-z">
+          <span>Single Workflow</span>
+          <span>Multi-Workflow</span>
+        </div>
+        <div class="axis-gradient-bar axis-gradient-y">
+          <span>Component Tools</span>
+          <span>Full Stack Autonomy</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1546,32 +1676,14 @@
     const wrapper = document.getElementById('horizontal-wrapper');
     const sections = Array.from(wrapper.querySelectorAll('section'));
     const thesisSection = document.getElementById('thesis');
-    const referenceSection = document.getElementById('thesis-reference');
+    const groundedSection = document.getElementById('thesis-grounded');
     let currentIndex = 0;
     let wheelLocked = false;
 
     const mapCanvas = document.getElementById('landscape-canvas');
     const mapTooltip = document.getElementById('landscape-tooltip');
+    const groundedCanvas = document.getElementById('grounded-canvas');
     const mapState = {
-      ready: false,
-      active: false,
-      angle: 0,
-      pulse: 0,
-      hoveredId: null,
-      tooltipHover: false,
-      hideTimer: null,
-      dpr: 1,
-      width: 0,
-      height: 0,
-      cx: 0,
-      cy: 0,
-      perspective: 460,
-      nodes: [],
-      nodePositions: []
-    };
-
-    const referenceCanvas = document.getElementById('reference-map-canvas');
-    const referenceState = {
       ready: false,
       active: false,
       pointerInside: false,
@@ -1593,17 +1705,145 @@
       cx: 0,
       cy: 0,
       perspective: 460,
-      nodes: []
+      xSpread: 468,
+      ySpread: 390,
+      nodes: [],
+      nodePositions: []
+    };
+    const groundedState = {
+      ready: false,
+      active: false,
+      pointerInside: false,
+      dragging: false,
+      yawBase: 0.62,
+      pitchBase: -0.42,
+      yawOffset: 0,
+      pitchOffset: 0,
+      yawCurrent: 0.62,
+      pitchCurrent: -0.42,
+      dragStartX: 0,
+      dragStartY: 0,
+      dragStartYawOffset: 0,
+      dragStartPitchOffset: 0,
+      dpr: 1,
+      width: 0,
+      height: 0,
+      cx: 0,
+      cy: 0,
+      perspective: 520,
+      xSpread: 520,
+      ySpread: 420,
+      maxYawDelta: Math.PI / 18,
+      maxPitchDelta: Math.PI / 18,
+      nodes: [],
+      nodePositions: []
+    };
+    const groundedDebugGuides = {
+      enabled: true,
+      vertexOrder: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+      edges: []
+    };
+    let sharedNodes = null;
+
+    const strategicBounds = {
+      x: { min: 0.05, max: 1.0 },
+      y: { min: 0.22, max: 1.0 },
+      z: { min: 0.06, max: 1.0 }
     };
 
-    function createStrategicNodes() {
+    function getSharedNodes() {
+      if (!sharedNodes) {
+        sharedNodes = createStrategicNodes();
+      }
+      return sharedNodes;
+    }
+
+    // Legacy coordinate space from pre-merge lattice for remapping historical node positions
+    const legacyStrategicBounds = {
+      x: { min: -1, max: 1 },
+      y: { min: 0, max: 1 },
+      z: { min: -1, max: 1 }
+    };
+
+    function clampPointToStrategicBounds(point) {
+      return {
+        x: Math.max(strategicBounds.x.min, Math.min(strategicBounds.x.max, point.x)),
+        y: Math.max(strategicBounds.y.min, Math.min(strategicBounds.y.max, point.y)),
+        z: Math.max(strategicBounds.z.min, Math.min(strategicBounds.z.max, point.z))
+      };
+    }
+
+    function remapValue(value, oldMin, oldMax, newMin, newMax) {
+      const clamped = Math.max(oldMin, Math.min(oldMax, value));
+      const t = (clamped - oldMin) / (oldMax - oldMin);
+      return newMin + t * (newMax - newMin);
+    }
+
+    function remapLegacyPointToStrategicBounds(point) {
+      return clampPointToStrategicBounds({
+        x: remapValue(point.x, legacyStrategicBounds.x.min, legacyStrategicBounds.x.max, strategicBounds.x.min, strategicBounds.x.max),
+        y: remapValue(point.y, legacyStrategicBounds.y.min, legacyStrategicBounds.y.max, strategicBounds.y.min, strategicBounds.y.max),
+        z: remapValue(point.z, legacyStrategicBounds.z.min, legacyStrategicBounds.z.max, strategicBounds.z.min, strategicBounds.z.max)
+      });
+    }
+
+    function getStrategicBoundsMeta() {
+      return {
+        xMin: strategicBounds.x.min,
+        xMax: strategicBounds.x.max,
+        yMin: strategicBounds.y.min,
+        yMax: strategicBounds.y.max,
+        zMin: strategicBounds.z.min,
+        zMax: strategicBounds.z.max,
+        xMid: (strategicBounds.x.min + strategicBounds.x.max) / 2,
+        yMid: (strategicBounds.y.min + strategicBounds.y.max) / 2,
+        zMid: (strategicBounds.z.min + strategicBounds.z.max) / 2
+      };
+    }
+
+    function getStrategicBoxCorners() {
+      const b = getStrategicBoundsMeta();
       return [
+        { x: b.xMin, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMax, z: b.zMin },
+        { x: b.xMin, y: b.yMax, z: b.zMin },
+        { x: b.xMin, y: b.yMin, z: b.zMax },
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        { x: b.xMax, y: b.yMax, z: b.zMax },
+        { x: b.xMin, y: b.yMax, z: b.zMax }
+      ];
+    }
+
+    function drawStrategicBoundingBox(ctx, yaw, pitch, projector, strokeColor, lineWidth) {
+      const corners = getStrategicBoxCorners();
+      const edges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7]
+      ];
+
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth;
+
+      edges.forEach((edge) => {
+        const p1 = projector(rotatePoint(corners[edge[0]], yaw, pitch));
+        const p2 = projector(rotatePoint(corners[edge[1]], yaw, pitch));
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      });
+    }
+
+    function createStrategicNodes() {
+      const nodes = [
         {
           id: 'carbon',
           label: 'Carbon Origins',
           cluster: 'carbon',
           color: '#ff5a5a',
-          point: { x: 0.92, y: 0.94, z: 0.93 },
+          point: { x: 0.5, y: 0.75, z: -0.5 },
           radius: 8.5,
           detail: 'Only agentic, full-stack, cross-application platform',
           link: 'https://www.carbonorigins.com'
@@ -1663,15 +1903,19 @@
           detail: 'Strong in selected dimensions, but partial versus Carbon frontier'
         }
       ];
+
+      return nodes.map((node) => ({
+        ...node,
+        point: remapLegacyPointToStrategicBounds(node.point)
+      }));
     }
 
     function initStrategicMap() {
-      if (!mapCanvas || !mapTooltip) return;
+      if (!mapCanvas) return;
 
-      mapState.nodes = createStrategicNodes();
-
+      mapState.nodes = getSharedNodes();
       resizeStrategicMap();
-      bindStrategicMapHover();
+      bindStrategicMapInteraction();
       mapState.ready = true;
       requestAnimationFrame(renderStrategicMap);
     }
@@ -1695,53 +1939,129 @@
       }
     }
 
-    function bindStrategicMapHover() {
-      mapCanvas.addEventListener('mouseleave', () => {
-        mapState.hoveredId = null;
-        hideMapTooltip();
+    function bindStrategicMapInteraction() {
+      if (!mapCanvas) return;
+
+      mapCanvas.addEventListener('pointerenter', () => {
+        mapState.pointerInside = true;
       });
 
-      mapCanvas.addEventListener('mousemove', (event) => {
-        if (!mapState.active) {
-          mapState.hoveredId = null;
-          hideMapTooltip();
-          return;
-        }
-
-        const rect = mapCanvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        const hovered = pickNodeAtPoint(x, y);
-
-        if (!hovered) {
-          mapState.hoveredId = null;
-          if (!mapState.tooltipHover) {
-            hideMapTooltip();
-          }
-          return;
-        }
-
-        mapState.tooltipHover = false;
-        if (mapState.hideTimer) {
-          clearTimeout(mapState.hideTimer);
-          mapState.hideTimer = null;
-        }
-        mapState.hoveredId = hovered.id;
-        showMapTooltip(hovered.node, hovered.x, hovered.y);
+      mapCanvas.addEventListener('pointerleave', () => {
+        mapState.pointerInside = false;
+        mapState.dragging = false;
+        mapCanvas.classList.remove('is-dragging');
       });
 
-      mapTooltip.addEventListener('mouseenter', () => {
-        mapState.tooltipHover = true;
-        if (mapState.hideTimer) {
-          clearTimeout(mapState.hideTimer);
-          mapState.hideTimer = null;
-        }
+      mapCanvas.addEventListener('pointerdown', (event) => {
+        if (!mapState.active) return;
+        mapState.dragging = true;
+        mapState.pointerInside = true;
+        mapState.dragStartX = event.clientX;
+        mapState.dragStartY = event.clientY;
+        mapState.dragStartYawOffset = mapState.yawOffset;
+        mapState.dragStartPitchOffset = mapState.pitchOffset;
+        mapCanvas.classList.add('is-dragging');
+        mapCanvas.setPointerCapture(event.pointerId);
       });
 
-      mapTooltip.addEventListener('mouseleave', () => {
-        mapState.tooltipHover = false;
-        hideMapTooltip();
+      mapCanvas.addEventListener('pointermove', (event) => {
+        if (!mapState.dragging) return;
+
+        const dx = event.clientX - mapState.dragStartX;
+        const dy = event.clientY - mapState.dragStartY;
+        mapState.yawOffset = Math.max(-0.58, Math.min(0.58, mapState.dragStartYawOffset + dx * 0.0042));
+        mapState.pitchOffset = Math.max(-0.24, Math.min(0.24, mapState.dragStartPitchOffset + dy * 0.0034));
       });
+
+      const stopDragging = (event) => {
+        if (!mapState.dragging) return;
+        mapState.dragging = false;
+        mapCanvas.classList.remove('is-dragging');
+        if (event && typeof event.pointerId === 'number' && mapCanvas.hasPointerCapture(event.pointerId)) {
+          mapCanvas.releasePointerCapture(event.pointerId);
+        }
+      };
+
+      mapCanvas.addEventListener('pointerup', stopDragging);
+      mapCanvas.addEventListener('pointercancel', stopDragging);
+    }
+
+    function initGroundedMap() {
+      if (!groundedCanvas) return;
+
+      groundedState.nodes = getSharedNodes();
+      resizeGroundedMap();
+      bindGroundedMapInteraction();
+      groundedState.ready = true;
+      requestAnimationFrame(renderGroundedMap);
+    }
+
+    function resizeGroundedMap() {
+      if (!groundedCanvas) return;
+
+      const rect = groundedCanvas.getBoundingClientRect();
+      groundedState.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      groundedState.width = Math.max(320, Math.floor(rect.width));
+      groundedState.height = Math.max(220, Math.floor(rect.height));
+      groundedState.cx = groundedState.width / 2;
+      groundedState.cy = groundedState.height / 2;
+
+      groundedCanvas.width = Math.floor(groundedState.width * groundedState.dpr);
+      groundedCanvas.height = Math.floor(groundedState.height * groundedState.dpr);
+
+      const ctx = groundedCanvas.getContext('2d');
+      if (ctx) {
+        ctx.setTransform(groundedState.dpr, 0, 0, groundedState.dpr, 0, 0);
+      }
+    }
+
+    function bindGroundedMapInteraction() {
+      if (!groundedCanvas) return;
+
+      groundedCanvas.addEventListener('pointerenter', () => {
+        groundedState.pointerInside = true;
+      });
+
+      groundedCanvas.addEventListener('pointerleave', () => {
+        groundedState.pointerInside = false;
+        groundedState.dragging = false;
+        groundedCanvas.classList.remove('is-dragging');
+      });
+
+      groundedCanvas.addEventListener('pointerdown', (event) => {
+        if (!groundedState.active) return;
+        groundedState.dragging = true;
+        groundedState.pointerInside = true;
+        groundedState.dragStartX = event.clientX;
+        groundedState.dragStartY = event.clientY;
+        groundedState.dragStartYawOffset = groundedState.yawOffset;
+        groundedState.dragStartPitchOffset = groundedState.pitchOffset;
+        groundedCanvas.classList.add('is-dragging');
+        groundedCanvas.setPointerCapture(event.pointerId);
+      });
+
+      groundedCanvas.addEventListener('pointermove', (event) => {
+        if (!groundedState.dragging) return;
+
+        const dx = event.clientX - groundedState.dragStartX;
+        const dy = event.clientY - groundedState.dragStartY;
+        const yawCandidate = groundedState.dragStartYawOffset + dx * 0.004;
+        const pitchCandidate = groundedState.dragStartPitchOffset + dy * 0.003;
+        groundedState.yawOffset = Math.max(-groundedState.maxYawDelta, Math.min(groundedState.maxYawDelta, yawCandidate));
+        groundedState.pitchOffset = Math.max(-groundedState.maxPitchDelta, Math.min(groundedState.maxPitchDelta, pitchCandidate));
+      });
+
+      const stopDraggingGrounded = (event) => {
+        if (!groundedState.dragging) return;
+        groundedState.dragging = false;
+        groundedCanvas.classList.remove('is-dragging');
+        if (event && typeof event.pointerId === 'number' && groundedCanvas.hasPointerCapture(event.pointerId)) {
+          groundedCanvas.releasePointerCapture(event.pointerId);
+        }
+      };
+
+      groundedCanvas.addEventListener('pointerup', stopDraggingGrounded);
+      groundedCanvas.addEventListener('pointercancel', stopDraggingGrounded);
     }
 
     function rotatePoint(point, yaw, pitch) {
@@ -1767,9 +2087,11 @@
     function projectPointWithState(rotated, state) {
       const depth = rotated.z + 2.35;
       const scale = state.perspective / (depth * state.perspective);
+      const xSpread = state.xSpread || 320;
+      const ySpread = state.ySpread || 270;
       return {
-        x: state.cx + rotated.x * 320 * scale,
-        y: state.cy - rotated.y * 270 * scale,
+        x: state.cx + rotated.x * xSpread * scale,
+        y: state.cy - rotated.y * ySpread * scale,
         z: rotated.z,
         scale,
         depth
@@ -1777,10 +2099,11 @@
     }
 
     function drawAxis(ctx, yaw, pitch) {
-      const origin = projectPoint(rotatePoint({ x: -0.02, y: -0.02, z: -0.02 }, yaw, pitch));
-      const xEnd = projectPoint(rotatePoint({ x: 1.08, y: 0, z: 0 }, yaw, pitch));
-      const yEnd = projectPoint(rotatePoint({ x: 0, y: 1.08, z: 0 }, yaw, pitch));
-      const zEnd = projectPoint(rotatePoint({ x: 0, y: 0, z: 1.08 }, yaw, pitch));
+      const b = getStrategicBoundsMeta();
+      const origin = projectPoint(rotatePoint({ x: b.xMin, y: b.yMin, z: b.zMin }, yaw, pitch));
+      const xEnd = projectPoint(rotatePoint({ x: b.xMax + 0.08, y: b.yMin, z: b.zMin }, yaw, pitch));
+      const yEnd = projectPoint(rotatePoint({ x: b.xMin, y: b.yMax + 0.08, z: b.zMin }, yaw, pitch));
+      const zEnd = projectPoint(rotatePoint({ x: b.xMin, y: b.yMin, z: b.zMax + 0.08 }, yaw, pitch));
 
       ctx.lineWidth = 1.6;
 
@@ -1812,7 +2135,8 @@
       ];
 
       zones.forEach((zone) => {
-        const projected = projectPoint(rotatePoint(zone.center, yaw, pitch));
+        const positiveCenter = remapLegacyPointToStrategicBounds(zone.center);
+        const projected = projectPoint(rotatePoint(positiveCenter, yaw, pitch));
         const radius = Math.max(26, 44 * projected.scale * 4.8);
         const gradient = ctx.createRadialGradient(
           projected.x,
@@ -1832,23 +2156,33 @@
     }
 
     function drawNodes(ctx, yaw, pitch) {
+      const bounds = getStrategicBoundsMeta();
+      const uniformNodeRadius = 5.6;
+      const pinColor = 'rgba(96, 165, 250, 0.85)';
       const projectedNodes = mapState.nodes.map((node) => {
         const rotated = rotatePoint(node.point, yaw, pitch);
         const projected = projectPoint(rotated);
-        return { node, rotated, projected };
+        const floorPoint = rotatePoint({ x: node.point.x, y: bounds.yMin, z: node.point.z }, yaw, pitch);
+        const floorProjected = projectPoint(floorPoint);
+        return { node, rotated, projected, floorProjected };
       });
 
       projectedNodes.sort((a, b) => a.projected.depth - b.projected.depth);
       mapState.nodePositions = projectedNodes;
 
       projectedNodes.forEach((entry) => {
-        const { node, projected } = entry;
-        const hovered = mapState.hoveredId === node.id;
+        const { node, projected, floorProjected } = entry;
         const isCarbon = node.cluster === 'carbon';
-        const radiusBoost = hovered ? 1.22 : 1;
-        const pulse = isCarbon ? (1 + Math.sin(mapState.pulse) * 0.07) : 1;
-        const baseRadius = node.radius * projected.scale * 4.2;
-        const radius = Math.max(3.8, baseRadius * radiusBoost * pulse);
+        const baseRadius = uniformNodeRadius * projected.scale * 4;
+        const radius = Math.max(4.5, baseRadius);
+
+        // Draw pin from node down to the floor plane for depth reference
+        ctx.strokeStyle = pinColor;
+        ctx.lineWidth = Math.max(1, radius * 0.18);
+        ctx.beginPath();
+        ctx.moveTo(projected.x, projected.y);
+        ctx.lineTo(floorProjected.x, floorProjected.y);
+        ctx.stroke();
 
         const glow = ctx.createRadialGradient(
           projected.x,
@@ -1856,13 +2190,13 @@
           radius * 0.2,
           projected.x,
           projected.y,
-          radius * (isCarbon ? 3.6 : 2.4)
+          radius * (isCarbon ? 3.2 : 2.15)
         );
-        glow.addColorStop(0, isCarbon ? 'rgba(255, 110, 110, 0.7)' : `${node.color}88`);
+        glow.addColorStop(0, isCarbon ? 'rgba(255, 110, 110, 0.62)' : `${node.color}66`);
         glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.3 : 1.75), 0, Math.PI * 2);
+        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.15 : 1.6), 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = node.color;
@@ -1870,15 +2204,15 @@
         ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.lineWidth = hovered ? 1.8 : 1;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.74)';
+        ctx.lineWidth = isCarbon ? 1.8 : 1;
         ctx.beginPath();
         ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
         ctx.stroke();
 
-        const showLabel = isCarbon || hovered || projected.scale > 0.47;
+        const showLabel = isCarbon || projected.scale > 0.46;
         if (showLabel) {
-          ctx.fillStyle = isCarbon ? '#ffecec' : 'rgba(230, 235, 243, 0.92)';
+          ctx.fillStyle = isCarbon ? '#ffecec' : 'rgba(226, 232, 240, 0.9)';
           ctx.font = `600 ${isCarbon ? 12 : 10}px Inter, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
@@ -1950,6 +2284,578 @@
       }, 150);
     }
 
+    function drawFullCubeLattice(ctx, yaw, pitch, projector) {
+      const b = getStrategicBoundsMeta();
+      const gridDivisions = 2; // Visual guide uses 2x2x2 segmentation
+      
+      // Helper to draw a line between two points
+      const drawLine = (start, end, color, width) => {
+        const p1 = projector(rotatePoint(start, yaw, pitch));
+        const p2 = projector(rotatePoint(end, yaw, pitch));
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      };
+
+      // Helper to calculate depth for opacity
+      const getOpacityByDepth = (z) => {
+        const depthRatio = (z - b.zMin) / (b.zMax - b.zMin);
+        return 0.15 + depthRatio * 0.35; // Back lines: 0.15, Front lines: 0.50
+      };
+
+      // X-Y planes (constant Z) - parallel planes
+      for (let zi = 0; zi <= gridDivisions; zi++) {
+        const z = b.zMin + (b.zMax - b.zMin) * (zi / gridDivisions);
+        const opacity = getOpacityByDepth(z);
+        const color = `rgba(148, 163, 184, ${opacity})`;
+        const width = zi === 0 || zi === gridDivisions ? 1.2 : 0.8;
+
+        // X lines (along X axis)
+        for (let yi = 0; yi <= gridDivisions; yi++) {
+          const y = b.yMin + (b.yMax - b.yMin) * (yi / gridDivisions);
+          drawLine(
+            { x: b.xMin, y: y, z: z },
+            { x: b.xMax, y: y, z: z },
+            color,
+            width
+          );
+        }
+
+        // Y lines (along Y axis)
+        for (let xi = 0; xi <= gridDivisions; xi++) {
+          const x = b.xMin + (b.xMax - b.xMin) * (xi / gridDivisions);
+          drawLine(
+            { x: x, y: b.yMin, z: z },
+            { x: x, y: b.yMax, z: z },
+            color,
+            width
+          );
+        }
+      }
+
+      // Z lines (along Z axis) at grid points
+      for (let xi = 0; xi <= gridDivisions; xi++) {
+        for (let yi = 0; yi <= gridDivisions; yi++) {
+          const x = b.xMin + (b.xMax - b.xMin) * (xi / gridDivisions);
+          const y = b.yMin + (b.yMax - b.yMin) * (yi / gridDivisions);
+          const zFrontOpacity = getOpacityByDepth(b.zMax);
+          const color = `rgba(168, 85, 247, ${zFrontOpacity})`;
+          const width = (xi === 0 || xi === gridDivisions) && (yi === 0 || yi === gridDivisions) ? 1.4 : 0.8;
+
+          drawLine(
+            { x: x, y: y, z: b.zMin },
+            { x: x, y: y, z: b.zMax },
+            color,
+            width
+          );
+        }
+      }
+
+      // Draw bounding box edges - thicker and more visible
+      const edges = [
+        // Bottom face (Z=zMin)
+        [{ x: b.xMin, y: b.yMin, z: b.zMin }, { x: b.xMax, y: b.yMin, z: b.zMin }],
+        [{ x: b.xMax, y: b.yMin, z: b.zMin }, { x: b.xMax, y: b.yMax, z: b.zMin }],
+        [{ x: b.xMax, y: b.yMax, z: b.zMin }, { x: b.xMin, y: b.yMax, z: b.zMin }],
+        [{ x: b.xMin, y: b.yMax, z: b.zMin }, { x: b.xMin, y: b.yMin, z: b.zMin }],
+        // Top face (Z=zMax)
+        [{ x: b.xMin, y: b.yMin, z: b.zMax }, { x: b.xMax, y: b.yMin, z: b.zMax }],
+        [{ x: b.xMax, y: b.yMin, z: b.zMax }, { x: b.xMax, y: b.yMax, z: b.zMax }],
+        [{ x: b.xMax, y: b.yMax, z: b.zMax }, { x: b.xMin, y: b.yMax, z: b.zMax }],
+        [{ x: b.xMin, y: b.yMax, z: b.zMax }, { x: b.xMin, y: b.yMin, z: b.zMax }],
+        // Vertical edges
+        [{ x: b.xMin, y: b.yMin, z: b.zMin }, { x: b.xMin, y: b.yMin, z: b.zMax }],
+        [{ x: b.xMax, y: b.yMin, z: b.zMin }, { x: b.xMax, y: b.yMin, z: b.zMax }],
+        [{ x: b.xMax, y: b.yMax, z: b.zMin }, { x: b.xMax, y: b.yMax, z: b.zMax }],
+        [{ x: b.xMin, y: b.yMax, z: b.zMin }, { x: b.xMin, y: b.yMax, z: b.zMax }]
+      ];
+
+      edges.forEach((edge) => {
+        const midZ = (edge[0].z + edge[1].z) / 2;
+        const opacity = getOpacityByDepth(midZ);
+        drawLine(edge[0], edge[1], `rgba(226, 232, 240, ${opacity + 0.2})`, 1.5);
+      });
+    }
+
+    function drawGroundedStage(ctx, yaw, pitch, state) {
+      const b = getStrategicBoundsMeta();
+      const rotateAndProject = (point) => projectPointWithState(rotatePoint(point, yaw, pitch), state);
+      const floorCorners = [
+        { x: b.xMin, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        { x: b.xMin, y: b.yMin, z: b.zMax }
+      ].map(rotateAndProject);
+
+      const floorGradient = ctx.createLinearGradient(
+        floorCorners[0].x,
+        floorCorners[0].y,
+        floorCorners[2].x,
+        floorCorners[2].y
+      );
+      floorGradient.addColorStop(0, 'rgba(15, 23, 42, 0.95)');
+      floorGradient.addColorStop(1, 'rgba(6, 8, 14, 0.92)');
+      ctx.fillStyle = floorGradient;
+      ctx.beginPath();
+      floorCorners.forEach((point, index) => {
+        if (index === 0) ctx.moveTo(point.x, point.y);
+        else ctx.lineTo(point.x, point.y);
+      });
+      ctx.closePath();
+      ctx.fill();
+
+      const drawPlane = (points, colors) => {
+        const projected = points.map(rotateAndProject);
+        const gradient = ctx.createLinearGradient(
+          projected[0].x,
+          projected[0].y,
+          projected[1].x,
+          projected[1].y
+        );
+        colors.forEach((stop) => gradient.addColorStop(stop.offset, stop.color));
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        projected.forEach((point, index) => {
+          if (index === 0) ctx.moveTo(point.x, point.y);
+          else ctx.lineTo(point.x, point.y);
+        });
+        ctx.closePath();
+        ctx.fill();
+      };
+
+      drawPlane([
+        { x: b.xMax, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMax, z: b.zMin },
+        { x: b.xMax, y: b.yMax, z: b.zMax },
+        { x: b.xMax, y: b.yMin, z: b.zMax }
+      ], [
+        { offset: 0, color: 'rgba(30, 41, 59, 0.88)' },
+        { offset: 1, color: 'rgba(15, 23, 42, 0.65)' }
+      ]);
+
+      drawPlane([
+        { x: b.xMin, y: b.yMin, z: b.zMax },
+        { x: b.xMin, y: b.yMax, z: b.zMax },
+        { x: b.xMax, y: b.yMax, z: b.zMax },
+        { x: b.xMax, y: b.yMin, z: b.zMax }
+      ], [
+        { offset: 0, color: 'rgba(23, 32, 49, 0.92)' },
+        { offset: 1, color: 'rgba(9, 11, 19, 0.6)' }
+      ]);
+
+      const drawStageLine = (start, end, alpha, width = 1.1, dashed = false) => {
+        const p1 = rotateAndProject(start);
+        const p2 = rotateAndProject(end);
+        ctx.save();
+        if (dashed) {
+          ctx.setLineDash([6, 8]);
+        }
+        ctx.strokeStyle = `rgba(148, 163, 184, ${alpha})`;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+        ctx.restore();
+      };
+
+      const divisions = 2;
+      for (let zi = 0; zi <= divisions; zi++) {
+        const z = b.zMin + (b.zMax - b.zMin) * (zi / divisions);
+        const alpha = zi === 0 || zi === divisions ? 0.6 : 0.35;
+        drawStageLine(
+          { x: b.xMin, y: b.yMin, z },
+          { x: b.xMax, y: b.yMin, z },
+          alpha,
+          zi === 0 || zi === divisions ? 1.4 : 1,
+          zi !== 0 && zi !== divisions
+        );
+      }
+
+      for (let xi = 0; xi <= divisions; xi++) {
+        const x = b.xMin + (b.xMax - b.xMin) * (xi / divisions);
+        const alpha = xi === 0 || xi === divisions ? 0.6 : 0.35;
+        drawStageLine(
+          { x, y: b.yMin, z: b.zMin },
+          { x, y: b.yMin, z: b.zMax },
+          alpha,
+          xi === 0 || xi === divisions ? 1.4 : 1,
+          xi !== 0 && xi !== divisions
+        );
+      }
+
+      for (let yi = 0; yi <= divisions; yi++) {
+        const y = b.yMin + (b.yMax - b.yMin) * (yi / divisions);
+        const isEdge = yi === 0 || yi === divisions;
+        const alpha = isEdge ? 0.5 : 0.3;
+        const width = isEdge ? 1.3 : 0.9;
+        drawStageLine(
+          { x: b.xMax, y, z: b.zMin },
+          { x: b.xMax, y, z: b.zMax },
+          alpha,
+          width,
+          !isEdge
+        );
+      }
+
+      for (let zi = 0; zi <= divisions; zi++) {
+        const z = b.zMin + (b.zMax - b.zMin) * (zi / divisions);
+        const isEdge = zi === 0 || zi === divisions;
+        const alpha = isEdge ? 0.5 : 0.3;
+        const width = isEdge ? 1.3 : 0.9;
+        drawStageLine(
+          { x: b.xMax, y: b.yMin, z },
+          { x: b.xMax, y: b.yMax, z },
+          alpha,
+          width,
+          !isEdge
+        );
+      }
+
+      for (let yi = 0; yi <= divisions; yi++) {
+        const y = b.yMin + (b.yMax - b.yMin) * (yi / divisions);
+        const isEdge = yi === 0 || yi === divisions;
+        const alpha = isEdge ? 0.5 : 0.3;
+        const width = isEdge ? 1.3 : 0.9;
+        drawStageLine(
+          { x: b.xMin, y, z: b.zMax },
+          { x: b.xMax, y, z: b.zMax },
+          alpha,
+          width,
+          !isEdge
+        );
+      }
+
+      for (let xi = 0; xi <= divisions; xi++) {
+        const x = b.xMin + (b.xMax - b.xMin) * (xi / divisions);
+        const isEdge = xi === 0 || xi === divisions;
+        const alpha = isEdge ? 0.5 : 0.3;
+        const width = isEdge ? 1.3 : 0.9;
+        drawStageLine(
+          { x, y: b.yMin, z: b.zMax },
+          { x, y: b.yMax, z: b.zMax },
+          alpha,
+          width,
+          !isEdge
+        );
+      }
+
+      drawStageLine(
+        { x: b.xMax, y: b.yMin, z: b.zMin },
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        0.65,
+        1.6
+      );
+      drawStageLine(
+        { x: b.xMin, y: b.yMin, z: b.zMax },
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        0.65,
+        1.6
+      );
+      drawStageLine(
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        { x: b.xMax, y: b.yMax, z: b.zMax },
+        0.45,
+        1.2
+      );
+      drawStageLine(
+        { x: b.xMax, y: b.yMin, z: b.zMax },
+        { x: b.xMax, y: b.yMin, z: b.zMin },
+        0.45,
+        1.2
+      );
+    }
+
+    function drawHighlightedWinningCube(ctx, yaw, pitch, state) {
+      const b = getStrategicBoundsMeta();
+      const corners = {
+        flb: { x: b.xMid, y: b.yMid, z: b.zMin },
+        frb: { x: b.xMax, y: b.yMid, z: b.zMin },
+        brb: { x: b.xMax, y: b.yMid, z: b.zMid },
+        blb: { x: b.xMid, y: b.yMid, z: b.zMid },
+        flt: { x: b.xMid, y: b.yMax, z: b.zMin },
+        frt: { x: b.xMax, y: b.yMax, z: b.zMin },
+        brt: { x: b.xMax, y: b.yMax, z: b.zMid },
+        blt: { x: b.xMid, y: b.yMax, z: b.zMid }
+      };
+
+      const projectedCorners = {};
+      Object.entries(corners).forEach(([key, point]) => {
+        const rotated = rotatePoint(point, yaw, pitch);
+        const projected = projectPointWithState(rotated, state);
+        projectedCorners[key] = { projected, depth: projected.depth };
+      });
+
+      const faces = [
+        { keys: ['flb', 'frb', 'frt', 'flt'], fill: 'rgba(253, 224, 71, 0.15)', stroke: 'rgba(253, 224, 71, 0.35)' },
+        { keys: ['frb', 'brb', 'brt', 'frt'], fill: 'rgba(253, 224, 71, 0.12)', stroke: 'rgba(253, 224, 71, 0.3)' },
+        { keys: ['brb', 'blb', 'blt', 'brt'], fill: 'rgba(253, 224, 71, 0.1)', stroke: 'rgba(253, 224, 71, 0.22)' },
+        { keys: ['flt', 'frt', 'brt', 'blt'], fill: 'rgba(253, 224, 71, 0.11)', stroke: 'rgba(253, 224, 71, 0.25)' },
+        { keys: ['flb', 'blb', 'blt', 'flt'], fill: 'rgba(253, 224, 71, 0.08)', stroke: 'rgba(253, 224, 71, 0.2)' },
+        { keys: ['flb', 'frb', 'brb', 'blb'], fill: 'rgba(253, 224, 71, 0.06)', stroke: 'rgba(253, 224, 71, 0.18)' }
+      ];
+
+      faces.sort((faceA, faceB) => {
+        const avgDepth = (face) => face.keys.reduce((sum, key) => sum + projectedCorners[key].depth, 0) / face.keys.length;
+        return avgDepth(faceA) - avgDepth(faceB);
+      });
+
+      faces.forEach((face) => {
+        ctx.save();
+        ctx.beginPath();
+        face.keys.forEach((key, index) => {
+          const point = projectedCorners[key].projected;
+          if (index === 0) ctx.moveTo(point.x, point.y);
+          else ctx.lineTo(point.x, point.y);
+        });
+        ctx.closePath();
+        ctx.fillStyle = face.fill;
+        ctx.fill();
+        ctx.strokeStyle = face.stroke;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    function drawAxisGuide(ctx, yaw, pitch, state, config) {
+      const projectedStart = projectPointWithState(rotatePoint(config.start, yaw, pitch), state);
+      const projectedEnd = projectPointWithState(rotatePoint(config.end, yaw, pitch), state);
+      const dx = projectedEnd.x - projectedStart.x;
+      const dy = projectedEnd.y - projectedStart.y;
+      const length = Math.max(1, Math.hypot(dx, dy));
+      const unitX = dx / length;
+      const unitY = dy / length;
+      const normalX = -unitY;
+      const normalY = unitX;
+
+      const gradient = ctx.createLinearGradient(projectedStart.x, projectedStart.y, projectedEnd.x, projectedEnd.y);
+      gradient.addColorStop(0, config.gradient[0]);
+      gradient.addColorStop(1, config.gradient[1]);
+
+      ctx.save();
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = config.lineWidth || 2;
+      ctx.beginPath();
+      ctx.moveTo(projectedStart.x, projectedStart.y);
+      ctx.lineTo(projectedEnd.x, projectedEnd.y);
+      ctx.stroke();
+
+      const arrowLength = 14;
+      const arrowWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(projectedEnd.x, projectedEnd.y);
+      ctx.lineTo(
+        projectedEnd.x - unitX * arrowLength + normalX * arrowWidth,
+        projectedEnd.y - unitY * arrowLength + normalY * arrowWidth
+      );
+      ctx.lineTo(
+        projectedEnd.x - unitX * arrowLength - normalX * arrowWidth,
+        projectedEnd.y - unitY * arrowLength - normalY * arrowWidth
+      );
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      const labelOffset = config.labelOffset ?? 16;
+      const centerX = projectedStart.x + dx * 0.5;
+      const centerY = projectedStart.y + dy * 0.5;
+      const labelX = centerX + normalX * labelOffset * (config.normalDirection ?? 1);
+      const labelY = centerY + normalY * labelOffset * (config.normalDirection ?? 1);
+
+      ctx.save();
+      ctx.translate(labelX, labelY);
+      ctx.rotate(Math.atan2(dy, dx));
+      ctx.font = config.labelFont || '800 12px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(248, 250, 255, 0.95)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+      ctx.shadowBlur = 8;
+      ctx.fillText(config.label, 0, 0);
+      ctx.restore();
+
+      if (config.showTicks) {
+        ctx.font = config.tickFont || '600 10px Inter, sans-serif';
+        ctx.textAlign = config.lowAlign || 'right';
+        ctx.textBaseline = 'middle';
+        const tickNormal = (config.normalDirection ?? 1);
+        const lowX = projectedStart.x - unitX * 16 + normalX * 12 * tickNormal;
+        const lowY = projectedStart.y - unitY * 16 + normalY * 12 * tickNormal;
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, lowX, lowY);
+        ctx.rotate(Math.atan2(dy, dx));
+        ctx.fillStyle = config.tickColor || 'rgba(226, 232, 240, 0.95)';
+        ctx.fillText(config.lowLabel || '', 0, 0);
+        ctx.restore();
+
+        ctx.textAlign = config.highAlign || 'left';
+        const highX = projectedEnd.x + unitX * 18 + normalX * 12 * tickNormal;
+        const highY = projectedEnd.y + unitY * 18 + normalY * 12 * tickNormal;
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, highX, highY);
+        ctx.rotate(Math.atan2(dy, dx));
+        ctx.fillStyle = config.tickColor || 'rgba(226, 232, 240, 0.95)';
+        ctx.fillText(config.highLabel || '', 0, 0);
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    function getGroundedVertices(meta) {
+      return {
+        A: { x: meta.xMin, y: meta.yMin, z: meta.zMin },
+        B: { x: meta.xMax, y: meta.yMin, z: meta.zMin },
+        C: { x: meta.xMax, y: meta.yMin, z: meta.zMax },
+        D: { x: meta.xMin, y: meta.yMin, z: meta.zMax },
+        E: { x: meta.xMin, y: meta.yMax, z: meta.zMin },
+        F: { x: meta.xMax, y: meta.yMax, z: meta.zMin },
+        G: { x: meta.xMax, y: meta.yMax, z: meta.zMax },
+        H: { x: meta.xMin, y: meta.yMax, z: meta.zMax }
+      };
+    }
+
+    function drawGroundedDebugGuides(ctx, yaw, pitch, state) {
+      if (!groundedDebugGuides.enabled) return;
+      const meta = getStrategicBoundsMeta();
+      const vertices = getGroundedVertices(meta);
+      const project = (point) => projectPointWithState(rotatePoint(point, yaw, pitch), state);
+
+      groundedDebugGuides.edges.forEach(({ from, to, color }) => {
+        const start = project(vertices[from]);
+        const end = project(vertices[to]);
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+        ctx.restore();
+      });
+
+      groundedDebugGuides.vertexOrder.forEach((label) => {
+        const point = project(vertices[label]);
+        ctx.save();
+        ctx.fillStyle = 'rgba(248, 250, 255, 0.92)';
+        ctx.font = '700 11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+        ctx.shadowBlur = 6;
+        ctx.fillText(label, point.x, point.y);
+        ctx.restore();
+      });
+    }
+
+    function drawGroundedAxisLabels(ctx, yaw, pitch, state) {
+      const b = getStrategicBoundsMeta();
+      const configs = [
+        {
+          label: 'NARROW -> UNIVERSAL OS',
+          start: { x: b.xMin, y: b.yMin, z: b.zMin }, // A
+          end: { x: b.xMax, y: b.yMin, z: b.zMin },   // B
+          showTicks: false,
+          gradient: ['rgba(37, 99, 235, 0.85)', 'rgba(16, 185, 129, 0.9)'],
+          normalDirection: 1,
+          labelOffset: 38,
+          labelFont: '800 9.6px Inter, sans-serif'
+        },
+        {
+          label: 'EXPENSIVE -> AFFORDABLE',
+          start: { x: b.xMin, y: b.yMin, z: b.zMax }, // D
+          end: { x: b.xMin, y: b.yMin, z: b.zMin },   // A
+          showTicks: false,
+          gradient: ['rgba(59, 130, 246, 0.85)', 'rgba(16, 185, 129, 0.9)'],
+          normalDirection: 1,
+          labelOffset: 30,
+          labelFont: '800 9.6px Inter, sans-serif'
+        },
+        {
+          label: 'CLASSICAL -> AGENTIC',
+          start: { x: b.xMin, y: b.yMin, z: b.zMax }, // D
+          end: { x: b.xMin, y: b.yMax, z: b.zMax },   // H
+          showTicks: false,
+          gradient: ['rgba(59, 130, 246, 0.75)', 'rgba(110, 231, 183, 0.92)'],
+          normalDirection: -1,
+          labelOffset: 28,
+          labelFont: '800 10.4px Inter, sans-serif'
+        }
+      ];
+
+      configs.forEach((config) => drawAxisGuide(ctx, yaw, pitch, state, config));
+    }
+
+    function drawGroundedNodes(ctx, yaw, pitch, state) {
+      if (!state.nodes || !state.nodes.length) return;
+
+      const b = getStrategicBoundsMeta();
+      const floorY = b.yMin;
+      const projectedNodes = state.nodes.map((node) => {
+        const rotated = rotatePoint(node.point, yaw, pitch);
+        const projected = projectPointWithState(rotated, state);
+        const floorPoint = rotatePoint({ x: node.point.x, y: floorY, z: node.point.z }, yaw, pitch);
+        const floorProjected = projectPointWithState(floorPoint, state);
+        return { node, projected, floorProjected, rotated };
+      });
+
+      projectedNodes.sort((a, bNode) => a.projected.depth - bNode.projected.depth);
+      state.nodePositions = projectedNodes;
+
+      projectedNodes.forEach((entry) => {
+        const { node, projected, floorProjected } = entry;
+        const isCarbon = node.id === 'carbon';
+        const baseRadius = (isCarbon ? 7.2 : 5.5) * projected.scale * 4.1;
+        const radius = Math.max(isCarbon ? 8.5 : 5.2, baseRadius);
+
+        ctx.save();
+        ctx.setLineDash([6, 6]);
+        ctx.strokeStyle = 'rgba(96, 165, 250, 0.75)';
+        ctx.lineWidth = Math.max(1, radius * 0.18);
+        ctx.beginPath();
+        ctx.moveTo(projected.x, projected.y);
+        ctx.lineTo(floorProjected.x, floorProjected.y);
+        ctx.stroke();
+        ctx.restore();
+
+        const glow = ctx.createRadialGradient(
+          projected.x,
+          projected.y,
+          radius * 0.2,
+          projected.x,
+          projected.y,
+          radius * (isCarbon ? 3.6 : 2.3)
+        );
+        glow.addColorStop(0, isCarbon ? 'rgba(255, 160, 160, 0.95)' : `${node.color}66`);
+        glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.6 : 1.9), 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = isCarbon ? '#fff6f6' : node.color;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.78)';
+        ctx.lineWidth = isCarbon ? 2 : 1.1;
+        ctx.beginPath();
+        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(226, 232, 240, 0.95)';
+        ctx.font = `600 ${isCarbon ? 12 : 10}px Inter, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(node.label, projected.x, projected.y + radius + 6);
+      });
+    }
+
     function renderStrategicMap() {
       if (!mapState.ready || !mapCanvas) {
         requestAnimationFrame(renderStrategicMap);
@@ -1963,302 +2869,101 @@
       }
 
       if (mapState.active) {
-        mapState.angle += 0.0022;
-        mapState.pulse += 0.045;
+        let hoverYaw = 0;
+        let hoverPitch = 0;
+
+        if (mapState.pointerInside && !mapState.dragging) {
+          mapState.driftPhase += 0.03;
+          hoverYaw = Math.sin(mapState.driftPhase) * 0.08;
+          hoverPitch = Math.cos(mapState.driftPhase * 0.85) * 0.04;
+        }
+
+        const targetYawOffset = mapState.pointerInside ? mapState.yawOffset + hoverYaw : 0;
+        const targetPitchOffset = mapState.pointerInside ? mapState.pitchOffset + hoverPitch : 0;
+        const targetYaw = mapState.yawBase + targetYawOffset;
+        const targetPitch = mapState.pitchBase + targetPitchOffset;
+
+        mapState.yawCurrent += (targetYaw - mapState.yawCurrent) * 0.11;
+        mapState.pitchCurrent += (targetPitch - mapState.pitchCurrent) * 0.11;
+
+        if (!mapState.pointerInside) {
+          mapState.yawOffset *= 0.86;
+          mapState.pitchOffset *= 0.86;
+        }
       } else {
-        mapState.angle += 0.0006;
-        mapState.pulse += 0.018;
+        mapState.pointerInside = false;
+        mapState.dragging = false;
+        mapState.yawOffset *= 0.88;
+        mapState.pitchOffset *= 0.88;
+        mapState.yawCurrent += (mapState.yawBase - mapState.yawCurrent) * 0.12;
+        mapState.pitchCurrent += (mapState.pitchBase - mapState.pitchCurrent) * 0.12;
+        mapCanvas.classList.remove('is-dragging');
       }
 
-      const yaw = mapState.angle;
-      const pitch = -0.34 + Math.sin(mapState.angle * 0.55) * 0.035;
-
       ctx.clearRect(0, 0, mapState.width, mapState.height);
-      drawSoftZones(ctx, yaw, pitch);
-      drawAxis(ctx, yaw, pitch);
-      drawNodes(ctx, yaw, pitch);
+      drawFullCubeLattice(ctx, mapState.yawCurrent, mapState.pitchCurrent, projectPoint);
+      drawNodes(ctx, mapState.yawCurrent, mapState.pitchCurrent);
 
       requestAnimationFrame(renderStrategicMap);
     }
 
-    function initReferenceMap() {
-      if (!referenceCanvas) return;
-
-      referenceState.nodes = createStrategicNodes();
-      resizeReferenceMap();
-      bindReferenceMapInteraction();
-      referenceState.ready = true;
-      requestAnimationFrame(renderReferenceMap);
-    }
-
-    function resizeReferenceMap() {
-      if (!referenceCanvas) return;
-
-      const rect = referenceCanvas.getBoundingClientRect();
-      referenceState.dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      referenceState.width = Math.max(320, Math.floor(rect.width));
-      referenceState.height = Math.max(220, Math.floor(rect.height));
-      referenceState.cx = referenceState.width / 2;
-      referenceState.cy = referenceState.height / 2;
-
-      referenceCanvas.width = Math.floor(referenceState.width * referenceState.dpr);
-      referenceCanvas.height = Math.floor(referenceState.height * referenceState.dpr);
-
-      const ctx = referenceCanvas.getContext('2d');
-      if (ctx) {
-        ctx.setTransform(referenceState.dpr, 0, 0, referenceState.dpr, 0, 0);
-      }
-    }
-
-    function bindReferenceMapInteraction() {
-      if (!referenceCanvas) return;
-
-      referenceCanvas.addEventListener('pointerenter', () => {
-        referenceState.pointerInside = true;
-      });
-
-      referenceCanvas.addEventListener('pointerleave', () => {
-        referenceState.pointerInside = false;
-        referenceState.dragging = false;
-        referenceCanvas.classList.remove('is-dragging');
-      });
-
-      referenceCanvas.addEventListener('pointerdown', (event) => {
-        if (!referenceState.active) return;
-        referenceState.dragging = true;
-        referenceState.pointerInside = true;
-        referenceState.dragStartX = event.clientX;
-        referenceState.dragStartY = event.clientY;
-        referenceState.dragStartYawOffset = referenceState.yawOffset;
-        referenceState.dragStartPitchOffset = referenceState.pitchOffset;
-        referenceCanvas.classList.add('is-dragging');
-        referenceCanvas.setPointerCapture(event.pointerId);
-      });
-
-      referenceCanvas.addEventListener('pointermove', (event) => {
-        if (!referenceState.dragging) return;
-
-        const dx = event.clientX - referenceState.dragStartX;
-        const dy = event.clientY - referenceState.dragStartY;
-        referenceState.yawOffset = Math.max(-0.58, Math.min(0.58, referenceState.dragStartYawOffset + dx * 0.0042));
-        referenceState.pitchOffset = Math.max(-0.24, Math.min(0.24, referenceState.dragStartPitchOffset + dy * 0.0034));
-      });
-
-      const stopDragging = (event) => {
-        if (!referenceState.dragging) return;
-        referenceState.dragging = false;
-        referenceCanvas.classList.remove('is-dragging');
-        if (event && typeof event.pointerId === 'number' && referenceCanvas.hasPointerCapture(event.pointerId)) {
-          referenceCanvas.releasePointerCapture(event.pointerId);
-        }
-      };
-
-      referenceCanvas.addEventListener('pointerup', stopDragging);
-      referenceCanvas.addEventListener('pointercancel', stopDragging);
-    }
-
-    function projectReferencePoint(rotated) {
-      return projectPointWithState(rotated, referenceState);
-    }
-
-    function drawReferenceLine(ctx, yaw, pitch, start, end, color, width) {
-      const p1 = projectReferencePoint(rotatePoint(start, yaw, pitch));
-      const p2 = projectReferencePoint(rotatePoint(end, yaw, pitch));
-      ctx.strokeStyle = color;
-      ctx.lineWidth = width;
-      ctx.beginPath();
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(p2.x, p2.y);
-      ctx.stroke();
-    }
-
-    function drawReferenceGuides(ctx, yaw, pitch) {
-      const min = -0.02;
-      const max = 1.02;
-      const mid = 0.5;
-      const guideValues = [min, mid, max];
-
-      guideValues.forEach((value) => {
-        drawReferenceLine(ctx, yaw, pitch, { x: min, y: value, z: mid }, { x: max, y: value, z: mid }, 'rgba(203, 213, 225, 0.2)', 1);
-        drawReferenceLine(ctx, yaw, pitch, { x: value, y: min, z: mid }, { x: value, y: max, z: mid }, 'rgba(203, 213, 225, 0.2)', 1);
-
-        drawReferenceLine(ctx, yaw, pitch, { x: mid, y: value, z: min }, { x: mid, y: value, z: max }, 'rgba(203, 213, 225, 0.18)', 1);
-        drawReferenceLine(ctx, yaw, pitch, { x: value, y: mid, z: min }, { x: value, y: mid, z: max }, 'rgba(203, 213, 225, 0.18)', 1);
-
-        drawReferenceLine(ctx, yaw, pitch, { x: value, y: min, z: value }, { x: value, y: max, z: value }, 'rgba(203, 213, 225, 0.14)', 1);
-        drawReferenceLine(ctx, yaw, pitch, { x: min, y: value, z: value }, { x: max, y: value, z: value }, 'rgba(203, 213, 225, 0.14)', 1);
-      });
-
-      const corners = [
-        { x: min, y: min, z: min },
-        { x: max, y: min, z: min },
-        { x: max, y: max, z: min },
-        { x: min, y: max, z: min },
-        { x: min, y: min, z: max },
-        { x: max, y: min, z: max },
-        { x: max, y: max, z: max },
-        { x: min, y: max, z: max }
-      ];
-      const edgePairs = [
-        [0, 1], [1, 2], [2, 3], [3, 0],
-        [4, 5], [5, 6], [6, 7], [7, 4],
-        [0, 4], [1, 5], [2, 6], [3, 7]
-      ];
-
-      edgePairs.forEach((pair) => {
-        drawReferenceLine(ctx, yaw, pitch, corners[pair[0]], corners[pair[1]], 'rgba(226, 232, 240, 0.16)', 1.1);
-      });
-    }
-
-    function drawReferenceAxis(ctx, yaw, pitch) {
-      const origin = projectReferencePoint(rotatePoint({ x: 0, y: 0, z: 0 }, yaw, pitch));
-      const xEnd = projectReferencePoint(rotatePoint({ x: 1.08, y: 0, z: 0 }, yaw, pitch));
-      const yEnd = projectReferencePoint(rotatePoint({ x: 0, y: 1.08, z: 0 }, yaw, pitch));
-      const zEnd = projectReferencePoint(rotatePoint({ x: 0, y: 0, z: 1.08 }, yaw, pitch));
-
-      ctx.lineWidth = 1.5;
-
-      ctx.strokeStyle = 'rgba(203, 213, 225, 0.52)';
-      ctx.beginPath();
-      ctx.moveTo(origin.x, origin.y);
-      ctx.lineTo(xEnd.x, xEnd.y);
-      ctx.stroke();
-
-      ctx.strokeStyle = 'rgba(203, 213, 225, 0.44)';
-      ctx.beginPath();
-      ctx.moveTo(origin.x, origin.y);
-      ctx.lineTo(yEnd.x, yEnd.y);
-      ctx.stroke();
-
-      ctx.strokeStyle = 'rgba(203, 213, 225, 0.38)';
-      ctx.beginPath();
-      ctx.moveTo(origin.x, origin.y);
-      ctx.lineTo(zEnd.x, zEnd.y);
-      ctx.stroke();
-    }
-
-    function drawReferenceNodes(ctx, yaw, pitch) {
-      const projectedNodes = referenceState.nodes.map((node) => {
-        const rotated = rotatePoint(node.point, yaw, pitch);
-        const projected = projectReferencePoint(rotated);
-        return { node, projected };
-      });
-
-      projectedNodes.sort((a, b) => a.projected.depth - b.projected.depth);
-
-      projectedNodes.forEach((entry) => {
-        const { node, projected } = entry;
-        const isCarbon = node.cluster === 'carbon';
-        const baseRadius = node.radius * projected.scale * 4;
-        const radius = Math.max(3.8, baseRadius * (isCarbon ? 1.12 : 1));
-
-        const glow = ctx.createRadialGradient(
-          projected.x,
-          projected.y,
-          radius * 0.2,
-          projected.x,
-          projected.y,
-          radius * (isCarbon ? 3.2 : 2.15)
-        );
-        glow.addColorStop(0, isCarbon ? 'rgba(255, 110, 110, 0.62)' : `${node.color}66`);
-        glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = glow;
-        ctx.beginPath();
-        ctx.arc(projected.x, projected.y, radius * (isCarbon ? 2.15 : 1.6), 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = node.color;
-        ctx.beginPath();
-        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.74)';
-        ctx.lineWidth = isCarbon ? 1.8 : 1;
-        ctx.beginPath();
-        ctx.arc(projected.x, projected.y, radius, 0, Math.PI * 2);
-        ctx.stroke();
-
-        const showLabel = isCarbon || projected.scale > 0.46;
-        if (showLabel) {
-          ctx.fillStyle = isCarbon ? '#ffecec' : 'rgba(226, 232, 240, 0.9)';
-          ctx.font = `600 ${isCarbon ? 12 : 10}px Inter, sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-          ctx.fillText(node.label, projected.x, projected.y - (radius + 7));
-        }
-      });
-    }
-
-    function renderReferenceMap() {
-      if (!referenceState.ready || !referenceCanvas) {
-        requestAnimationFrame(renderReferenceMap);
+    function renderGroundedMap() {
+      if (!groundedState.ready || !groundedCanvas) {
+        requestAnimationFrame(renderGroundedMap);
         return;
       }
 
-      const ctx = referenceCanvas.getContext('2d');
+      const ctx = groundedCanvas.getContext('2d');
       if (!ctx) {
-        requestAnimationFrame(renderReferenceMap);
+        requestAnimationFrame(renderGroundedMap);
         return;
       }
 
-      if (referenceState.active) {
-        let hoverYaw = 0;
-        let hoverPitch = 0;
+      if (groundedState.active) {
+        const targetYaw = groundedState.yawBase + groundedState.yawOffset;
+        const targetPitch = groundedState.pitchBase + groundedState.pitchOffset;
+        groundedState.yawCurrent += (targetYaw - groundedState.yawCurrent) * 0.12;
+        groundedState.pitchCurrent += (targetPitch - groundedState.pitchCurrent) * 0.12;
 
-        if (referenceState.pointerInside && !referenceState.dragging) {
-          referenceState.driftPhase += 0.03;
-          hoverYaw = Math.sin(referenceState.driftPhase) * 0.08;
-          hoverPitch = Math.cos(referenceState.driftPhase * 0.85) * 0.04;
-        }
-
-        const targetYawOffset = referenceState.pointerInside ? referenceState.yawOffset + hoverYaw : 0;
-        const targetPitchOffset = referenceState.pointerInside ? referenceState.pitchOffset + hoverPitch : 0;
-        const targetYaw = referenceState.yawBase + targetYawOffset;
-        const targetPitch = referenceState.pitchBase + targetPitchOffset;
-
-        referenceState.yawCurrent += (targetYaw - referenceState.yawCurrent) * 0.11;
-        referenceState.pitchCurrent += (targetPitch - referenceState.pitchCurrent) * 0.11;
-
-        if (!referenceState.pointerInside) {
-          referenceState.yawOffset *= 0.86;
-          referenceState.pitchOffset *= 0.86;
+        if (!groundedState.dragging) {
+          groundedState.yawOffset *= 0.9;
+          groundedState.pitchOffset *= 0.9;
         }
       } else {
-        referenceState.pointerInside = false;
-        referenceState.dragging = false;
-        referenceState.yawOffset *= 0.88;
-        referenceState.pitchOffset *= 0.88;
-        referenceState.yawCurrent += (referenceState.yawBase - referenceState.yawCurrent) * 0.12;
-        referenceState.pitchCurrent += (referenceState.pitchBase - referenceState.pitchCurrent) * 0.12;
-        referenceCanvas.classList.remove('is-dragging');
+        groundedState.pointerInside = false;
+        groundedState.dragging = false;
+        groundedState.yawOffset *= 0.85;
+        groundedState.pitchOffset *= 0.85;
+        groundedState.yawCurrent += (groundedState.yawBase - groundedState.yawCurrent) * 0.14;
+        groundedState.pitchCurrent += (groundedState.pitchBase - groundedState.pitchCurrent) * 0.14;
+        groundedCanvas.classList.remove('is-dragging');
       }
 
-      ctx.clearRect(0, 0, referenceState.width, referenceState.height);
-      drawReferenceGuides(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
-      drawReferenceAxis(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
-      drawReferenceNodes(ctx, referenceState.yawCurrent, referenceState.pitchCurrent);
+      ctx.clearRect(0, 0, groundedState.width, groundedState.height);
+      drawGroundedStage(ctx, groundedState.yawCurrent, groundedState.pitchCurrent, groundedState);
+      drawHighlightedWinningCube(ctx, groundedState.yawCurrent, groundedState.pitchCurrent, groundedState);
+      drawGroundedAxisLabels(ctx, groundedState.yawCurrent, groundedState.pitchCurrent, groundedState);
+      drawGroundedDebugGuides(ctx, groundedState.yawCurrent, groundedState.pitchCurrent, groundedState);
+      drawGroundedNodes(ctx, groundedState.yawCurrent, groundedState.pitchCurrent, groundedState);
 
-      requestAnimationFrame(renderReferenceMap);
+      requestAnimationFrame(renderGroundedMap);
     }
+
 
     function setStrategicMapActiveState() {
       const thesisIndex = sections.findIndex((section) => section.id === 'thesis');
-      const referenceIndex = sections.findIndex((section) => section.id === 'thesis-reference');
-      const active = currentIndex === thesisIndex;
-      const referenceActive = currentIndex === referenceIndex;
+      const groundedIndex = sections.findIndex((section) => section.id === 'thesis-grounded');
+      const thesisActive = currentIndex === thesisIndex;
+      const groundedActive = currentIndex === groundedIndex;
 
       if (thesisSection) {
-        thesisSection.classList.toggle('is-active', active);
+        thesisSection.classList.toggle('is-active', thesisActive);
       }
-      if (referenceSection) {
-        referenceSection.classList.toggle('is-active', referenceActive);
+      if (groundedSection) {
+        groundedSection.classList.toggle('is-active', groundedActive);
       }
-      mapState.active = active;
-      referenceState.active = referenceActive;
-      if (!active) {
-        mapState.hoveredId = null;
-        hideMapTooltip();
-      }
+      mapState.active = thesisActive;
+      groundedState.active = groundedActive;
     }
 
     function goToIndex(index) {
@@ -2279,9 +2984,8 @@
         if (!inner) return;
 
         // Exempt strategic map section from scaling
-        const isStrategicMap = section.id === 'thesis' && section.classList.contains('strategic-map');
-        const isReferenceMap = section.id === 'thesis-reference' && section.classList.contains('strategic-reference');
-        if (isStrategicMap || isReferenceMap) {
+        const isStrategicMap = (section.id === 'thesis' && section.classList.contains('strategic-map')) || section.id === 'thesis-grounded';
+        if (isStrategicMap) {
           inner.style.transform = 'scale(1)';
           inner.style.width = '';
           return;
@@ -2354,12 +3058,12 @@
     window.addEventListener('resize', () => {
       fitSlideContent();
       resizeStrategicMap();
-      resizeReferenceMap();
+      resizeGroundedMap();
       wrapper.scrollTo({ left: currentIndex * window.innerWidth });
     });
 
     initStrategicMap();
-    initReferenceMap();
+    initGroundedMap();
     fitSlideContent();
     setStrategicMapActiveState();
 
